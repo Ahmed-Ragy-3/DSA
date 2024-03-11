@@ -3,8 +3,9 @@ import java.util.Scanner;
 public class NourFile {
     static byte[][] contructMatix(String[] photo, int team)
     {
-        byte[][] matrix = new byte[photo.length][photo[0].length()];
+        byte[][] matrix = new byte[photo.length][];
         for(int i = 0; i < photo.length; i++){
+            matrix[i] = new byte[photo[i].length()];
             for(int j = 0; j < photo[i].length(); j++){
                 if(Character.compare(photo[i].charAt(j), (char)(team + '0')) == 0){
                     matrix[i][j] = 1;
