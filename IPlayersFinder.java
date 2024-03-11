@@ -5,7 +5,7 @@ public class IPlayersFinder {
 public class Main_class {
 
    ArrayList <Point> Centers = new ArrayList<>() ;
-
+   
    int numberofPixels = 0 ;
    int x_min = matrix[0].length ;
    int x_max , y_max = 0 ;
@@ -38,7 +38,7 @@ public class Main_class {
 
    static byte[][] contructMatix(String[] photo, int team) {
 
-      byte[][] matrix = new byte[photo.length][photo[0].length()] ;
+      //byte[][] matrix = new byte[photo.length][photo[0].length()] ;
       
       for(int i = 0; i < photo.length; i++) {
          for(int j = 0; j < photo[i].length(); j++) {
@@ -55,7 +55,7 @@ public class Main_class {
    
    public ArrayList<> findPlayers(String[] photo, int team, int threshold){
       contructMatix(photo, team) ;
-      
+
    }
 
    public void go_find_indexes(byte matrix[][]) {
@@ -113,8 +113,6 @@ public class Main_class {
 }
 
 public static void main(String[] args) {
-
-
 
    
    Scanner sc = new Scanner(System.in);
