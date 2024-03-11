@@ -1,3 +1,4 @@
+import java.awt.Point;
 public interface IPlayersFinder {
    /**
    * Search for players locations at the given photo
