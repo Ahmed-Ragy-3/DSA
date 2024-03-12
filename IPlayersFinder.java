@@ -3,7 +3,7 @@ import java.util.* ;
 
 public class IPlayersFinder {
    static int threshold = 0;
-   static int numberofPixels = 0; 
+   static int numberofPixels = 0 ;
    static byte[][] matrix ;
    static ArrayList<Point> Centers = new ArrayList<>() ;
    static int x_min ;
@@ -55,23 +55,23 @@ public class IPlayersFinder {
 
    static public void go_find_indexes() {
       
-       for(int i=0 ; i<matrix.length ; i++) {
-           for(int j=0 ; j<matrix[i].length ; j++) {
-               if(matrix[i][j] == 1) { // new chain
-                  x_min = matrix[0].length;
-                  y_min = matrix.length ;
-                  x_max = 0;
-                  y_max = 0;
-                  
-                   find_indexes(i , j) ; // hntl3 mn el chain
-                   if(numberofPixels * 4 >= threshold) {
-                     Centers.add(new Point(y_max + y_min + 1, x_max + x_min + 1)) ;
-                   }
-                   
+      for(int i=0 ; i<matrix.length ; i++) {
+         for(int j=0 ; j<matrix[i].length ; j++) {
+            if(matrix[i][j] == 1) { // new chain
+               x_min = matrix[0].length;
+               y_min = matrix.length ;
+               x_max = 0;
+               y_max = 0;
+               
+               find_indexes(i , j) ; // hntl3 mn el chain
+               if(numberofPixels * 4 >= threshold) {
+               Centers.add(new Point(y_max + y_min + 1, x_max + x_min + 1)) ;
                }
-               numberofPixels = 0 ;
-           }
-       }
+                  
+            }
+            numberofPixels = 0 ;
+         }
+      }
    }
    
    static public void find_indexes(int x , int y) {
