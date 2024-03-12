@@ -2,7 +2,7 @@ import java.awt.Point ;
 import java.util.* ;
 
 public class IPlayersFinder {
-   static int threshold;
+   static int threshold = 0;
    static int numberofPixels = 0; 
    static byte[][] matrix ;
    static ArrayList<Point> Centers = new ArrayList<>() ;
@@ -55,7 +55,6 @@ public class IPlayersFinder {
 
    static public void go_find_indexes() {
       
-      int numberofPixels = 0 ;
        for(int i=0 ; i<matrix.length ; i++) {
            for(int j=0 ; j<matrix[i].length ; j++) {
                if(matrix[i][j] == 1) { // new chain
@@ -66,8 +65,7 @@ public class IPlayersFinder {
                   
                    find_indexes(i , j) ; // hntl3 mn el chain
                    if(numberofPixels * 4 >= threshold) {
-                     Centers.add(new Point(x_max + x_min + 1 , y_max + y_min + 1)) ;
-                     System.out.println(Arrays.deepToString(Centers.toArray()));
+                     Centers.add(new Point(y_max + y_min + 1, x_max + x_min + 1)) ;
                    }
                    
                }
@@ -86,7 +84,6 @@ public class IPlayersFinder {
    
        else{
          numberofPixels++ ;
-         System.out.println("numberofPixels = " + numberofPixels);
          if(x < x_min) {
             x_min = x ;
          }
@@ -114,7 +111,15 @@ public class IPlayersFinder {
 
    public static void main(String[] args) {
       Scanner input = new Scanner(System.in);
-      int n = input.nextInt();
+      int n = 0;
+      String str = input.next();
+      String x = input.next();
+      if(str.length() == 3) {
+         n += Character.digit(str.charAt(0), 10) * 10 + Character.digit(str.charAt(1), 10);
+      }
+      else if(str.length() == 2) {
+         n = Character.digit(str.charAt(1), 10);
+      }
       String[] photo = new String[n];
 
       for(int i = 0; i < n; i++) {
@@ -124,19 +129,18 @@ public class IPlayersFinder {
       int team = input.nextInt();
       threshold = input.nextInt();
       contructMatix(photo, team) ;
-      System.out.println(Arrays.deepToString(matrix));
+      
       findPlayers(photo, team) ;
-      
-      
-      
-      
-      //printing matrix
-      for(int i = 0; i < matrix.length; i++) {
-         for(int j = 0; j < matrix[i].length; j++) {
-            System.out.print(matrix[i][j] + " ") ;
+      System.out.print("[");
+      for(int i = 0; i < Centers.size(); i++) {
+         System.out.print("(" + (int)Centers.get(i).getX() + ", " + (int)Centers.get(i).getY() + ")");
+         if(i != Centers.size() - 1)
+         {
+            System.out.print(", ");
          }
-         System.out.println();
       }
+      System.out.print("]");
+      
       input.close();
    }
 }
