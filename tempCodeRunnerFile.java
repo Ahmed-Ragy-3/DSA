@@ -118,7 +118,7 @@ public class IPlayersFinder {
          n += Character.digit(str.charAt(0), 10) * 10 + Character.digit(str.charAt(1), 10);
       }
       else if(str.length() == 2) {
-         n = Character.digit(str.charAt(0), 10);
+         n = Character.digit(str.charAt(1), 10);
       }
       String[] photo = new String[n];
 
