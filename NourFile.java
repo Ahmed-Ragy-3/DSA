@@ -1,6 +1,6 @@
 import java.util.*;
 import java.awt.Point;
-
+/* 
 public interface IPlayersFinder {
     /**
     * Search for players locations at the given photo
@@ -14,9 +14,10 @@ public interface IPlayersFinder {
     * Will be between 1 and 10000, inclusive
     * @return
     * Array of players locations of the given team
-    */
+    *
     java.awt.Point[] findPlayers(String[] photo, int team, int threshold);
-}
+} */
+
 
 /* *
 //import IPlayersFinder ;
