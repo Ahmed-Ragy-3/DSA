@@ -15,16 +15,16 @@ public class IPlayersFinder {
          for(int j = 0; j < Centers.size()-1; j++) {  
             if(Centers.get(j).getX() > Centers.get(j+1).getX()){
    
-                  Point temp = Centers.get(j) ;
-                  Centers.set(j , Centers.get(j+1)) ;
-                  Centers.set(j+1 , temp) ;
+               Point temp = Centers.get(j) ;
+               Centers.set(j , Centers.get(j+1)) ;
+               Centers.set(j+1 , temp) ;
    
             }else if(Centers.get(j).getX() == Centers.get(j+1).getX() && 
                      Centers.get(j).getY() > Centers.get(j+1).getY()) {
    
-                  Point temp = Centers.get(j) ;
-                  Centers.set(j , Centers.get(j+1)) ;
-                  Centers.set(j+1 , temp) ;
+               Point temp = Centers.get(j) ;
+               Centers.set(j , Centers.get(j+1)) ;
+               Centers.set(j+1 , temp) ;
             }
          }
       }
