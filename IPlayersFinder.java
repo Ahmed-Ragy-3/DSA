@@ -11,7 +11,10 @@ public class IPlayersFinder {
    static int y_min ;
 
    static void bubble_sort() {
-      for(int i = 0; i < Centers.size() ; i++) {
+       for(int h = 0; h < 10; h++)
+       {
+           
+           for(int i = 0; i < Centers.size() ; i++) {
          for(int j = 0; j < Centers.size()-1; j++) {  
             if(Centers.get(j).getX() > Centers.get(j+1).getX()){
    
@@ -28,6 +31,8 @@ public class IPlayersFinder {
             }
          }
       }
+    }
+      
    }
 
    static void contructMatix(String[] photo, int team) {
@@ -47,21 +52,15 @@ public class IPlayersFinder {
       return;
    }
    
-   static public void findPlayers(String[] photo, int team){
-      go_find_indexes();
-      bubble_sort();
-      
-   }
-
    static public void go_find_indexes() {
       
        for(int i=0 ; i<matrix.length ; i++) {
            for(int j=0 ; j<matrix[i].length ; j++) {
                if(matrix[i][j] == 1) { // new chain
-                  x_min = matrix[0].length;
-                  y_min = matrix.length ;
-                  x_max = 0;
-                  y_max = 0;
+                  x_min = matrix[0].length+ 1000;
+                  y_min = matrix.length + 1000;
+                  x_max = -1000;
+                  y_max = -1000;
                   
                    find_indexes(i , j) ; // hntl3 mn el chain
                    if(numberofPixels * 4 >= threshold) {
@@ -117,6 +116,12 @@ public class IPlayersFinder {
       if(str.length() == 3) {
          n += Character.digit(str.charAt(0), 10) * 10 + Character.digit(str.charAt(1), 10);
       }
+      else if(str.length() == 4) {
+         n += Character.digit(str.charAt(0), 10) * 100 + Character.digit(str.charAt(1), 10) * 10 + Character.digit(str.charAt(2), 10);
+      }
+      else if(str.length() == 5) {
+         n += Character.digit(str.charAt(0), 10) * 1000 + Character.digit(str.charAt(1), 10) * 100 + Character.digit(str.charAt(2), 10) * 10 + Character.digit(str.charAt(3), 10);
+      }
       else if(str.length() == 2) {
          n = Character.digit(str.charAt(0), 10);
       }
@@ -130,7 +135,8 @@ public class IPlayersFinder {
       threshold = input.nextInt();
       contructMatix(photo, team) ;
       
-      findPlayers(photo, team) ;
+      go_find_indexes();
+      bubble_sort();
       System.out.print("[");
       for(int i = 0; i < Centers.size(); i++) {
          System.out.print("(" + (int)Centers.get(i).getX() + ", " + (int)Centers.get(i).getY() + ")");
