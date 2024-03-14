@@ -61,10 +61,10 @@ public class IPlayersFinder {
       for(int i=0 ; i<matrix.length ; i++) {
          for(int j=0 ; j<matrix[i].length ; j++) {
             if(matrix[i][j] == 1) { // new chain
-               x_min = matrix[0].length;
-               y_min = matrix.length ;
-               x_max = 0;
-               y_max = 0;
+               x_min = matrix[0].length + 1000 ;
+               y_min = matrix.length + 1000 ;
+               x_max = -1 ;
+               y_max = -1 ;
                
                find_indexes(i , j) ; // hntl3 mn el chain
                if(numberofPixels * 4 >= threshold) {
