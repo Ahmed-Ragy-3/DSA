@@ -1,3 +1,4 @@
+package Linked_List;
 class DoublyNode<T> {
     private T value;
     private DoublyNode<T> next;
