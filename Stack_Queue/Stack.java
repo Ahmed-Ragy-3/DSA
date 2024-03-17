@@ -24,7 +24,7 @@ public class Stack implements MyStack {
 
    public node pop() {
 
-      if(isempty()) {return null ;}
+      if(isempty()) {return null ;} // underflow error
 
       node temp = top ;
       top = top.next ;
