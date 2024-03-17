@@ -1,7 +1,5 @@
 package Stack_Queue;
 
-
-
 public interface MyQueue<T> {
     int size();
     boolean isEmpty();
