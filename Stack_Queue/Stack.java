@@ -1,4 +1,5 @@
 package Stack_Queue;
+
 class node {
    int value ;
    node next ;
