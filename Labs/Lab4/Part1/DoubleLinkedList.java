@@ -1,6 +1,6 @@
 package Labs.Lab4.Part1;
 
-public class DoubleLinkedList implements ILinkedList{
+public class DoubleLinkedList implements ILinkedList {
 
     @Override
     public void add(int index, Object element) {
@@ -61,5 +61,5 @@ public class DoubleLinkedList implements ILinkedList{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'contains'");
     }
-    
+
 }
