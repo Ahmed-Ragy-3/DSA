@@ -37,9 +37,9 @@ class SingleNode {
 
 public class SinglyLinkedList { //this is a singly linked list that has head and tail pointers
     //attributes
-    private SingleNode head;
-    private SingleNode tail;
-    private int size;
+     SingleNode head;
+     SingleNode tail;
+     int size;
 
     //constructors
     public SinglyLinkedList() {

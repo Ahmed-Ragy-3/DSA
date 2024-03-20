@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class SingleLinkedList implements ILinkedList {
 
-    private SingleNode head;
-    private SingleNode tail;
-    private int size;
+    public SingleNode head;
+    public SingleNode tail;
+    public int size;
 
     // constructors
     public SingleLinkedList() {
