@@ -186,10 +186,10 @@ public class SingleLinkedList implements ILinkedList{
         SingleLinkedList newList = new SingleLinkedList();
         while(temp != temp2)
         {
-            newList.addAtEnd(temp.getValue());
-            temp = temp.getNext();
+            newList.addAtEnd(temp.getValue()) ;
+            temp = temp.getNext() ;
         }
-        return newList;
+        return newList ;
     }
 
     @Override
