@@ -1,4 +1,4 @@
-package Stack_Queue;
+package Stack_Queue ;
 
 class node {
    int value ;
@@ -10,31 +10,36 @@ class node {
    }
 }
 
-public class Stack {
+public class Stack implements MyStack {
    node top ;
 
-   public Stack() {
-
-   }
-   boolean isempty() {
+   public boolean isempty() {
       return (top == null) ;
    }
 
-   void push(node n) {
+   public void push(node n) {
       n.next = top ;
       top = n ;
    }
 
-   node pop() {
+   public node pop() {
+
+      if(isempty()) {return null ;} // underflow error
+
       node temp = top ;
       top = top.next ;
       return temp ;
    }
 
-   node Top() {
+   public node Top() {
       return top ;
    }
-   void print_stack() {
+
+   public void clear() {
+      top = null ;
+   }
+
+   public void print_stack() {
       node temp = top ;
       System.out.println(" ------ ");
       while(temp != null) {
