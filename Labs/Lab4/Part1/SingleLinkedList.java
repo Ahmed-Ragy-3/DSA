@@ -199,4 +199,32 @@ public class SingleLinkedList implements ILinkedList {
         System.out.print(temp.getValue() + "]");
         System.out.println();
     }
+public static void main(String[] args){
+    SingleLinkedList list = new SingleLinkedList();
+    list.addAtEnd(1);
+    list.addAtEnd(2);
+    list.addAtEnd(3);
+    list.addAtEnd(4);
+    list.addAtEnd(5);
+    list.addAtEnd(6);
+    list.addAtEnd(7);
+    list.addAtEnd(8);
+    list.addAtEnd(9);
+    list.addAtEnd(10);
+    list.addAtEnd(11);
+    list.addAtEnd(12);
+    list.addAtEnd(13);
+    list.addAtEnd(14);
+    list.addAtEnd(15);
+    list.addAtEnd(16);
+    list.addAtEnd(17);
+    list.addAtEnd(18);
+    list.addAtEnd(19);
+    list.remove();
+    list.remove(3);
+    list.remove(3);list.remove(3);list.remove(3);list.remove(3);list.remove(3);
+    list.print();
+    System.out.println(list.size());
+}
+
 }

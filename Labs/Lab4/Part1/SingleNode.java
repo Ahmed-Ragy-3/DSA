@@ -1,5 +1,6 @@
 package Labs.Lab4.Part1;
 
+
 class SingleNode {
     static private int numberOfNodes = 0;
     private Object value;

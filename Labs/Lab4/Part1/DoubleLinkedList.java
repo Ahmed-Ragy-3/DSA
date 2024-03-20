@@ -1,6 +1,23 @@
 package Labs.Lab4.Part1;
 
 public class DoubleLinkedList implements ILinkedList{
+    
+    private DoubleNode head ;
+    private DoubleNode tail ;
+    private int size ;
+    Object value;
+    
+    //constructors
+    public DoubleLinkedList() {
+        this.head = null ;
+        this.tail = null ;
+        this.size = 0 ;
+    }
+    public DoubleLinkedList(DoubleNode head) {
+        this.head = head ;
+        this.tail = head ;
+        this.size++ ;
+    }
 
     @Override
     public void add(int index, Object element) {
@@ -134,5 +151,5 @@ public class DoubleLinkedList implements ILinkedList{
         }
         return false ;
     }
-
+    
 }
