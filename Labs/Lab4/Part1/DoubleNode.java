@@ -1,6 +1,7 @@
 package Labs.Lab4.Part1;
 
 class DoubleNode {
+    
     private Object value;
     private DoubleNode next;
     private DoubleNode prev;
@@ -13,7 +14,6 @@ class DoubleNode {
         this.next = null;
         this.prev = null;
     }
-
     public DoubleNode(Object value, DoubleNode next, DoubleNode prev) {
         this.value = value;
         this.next = next;
