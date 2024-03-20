@@ -1,5 +1,7 @@
 package Labs.Lab4.Part1;
 
+import java.util.Scanner;
+
 public class DoubleLinkedList implements ILinkedList{
     
     private DoubleNode head ;
@@ -22,38 +24,40 @@ public class DoubleLinkedList implements ILinkedList{
     @Override
     public void add(int index, Object element) {
         
-        if(index < 0 || index > size){
-            System.out.println("There is no index " + index);
+        if(index < 0 || index >= size){
+            throw new IllegalStateException("Error") ;
+        }else if(index == size-1) {
+            add(element);
             return ;
         }
-        DoubleNode newNode = new DoubleNode(value);
-        if(index == 0) {
-            addFirst(value);
-            return ;
-        }
-        if(index == size) {
-            addLast(value);
-            return ;
-        }
-        DoubleNode temp = head;
-        for(int i = 0; i < index - 1; i++){
+
+        DoubleNode newNode = new DoubleNode(element) ;
+        
+        DoubleNode temp = head ;
+        for(int i = 0 ; i < index - 1 ; i++){
             temp = temp.getNext();
         }
 
-        newNode.setNext(temp.getNext());
-        temp.setNext(newNode);
-        newNode.setPrev(temp);
-        temp = temp.getNext().getNext();
-        temp.setPrev(newNode);
-        size++;
-        return;
+        newNode.setNext(temp.getNext()) ;
+        temp.setNext(newNode) ;
+        newNode.setPrev(temp) ;
+        //temp = temp.getNext().getNext() ;
+        newNode.getNext().setPrev(newNode) ;
+        size++ ;
         
     }
 
     @Override
     public void add(Object element) {
-        DoubleNode new_Node = new DoubleNode(element , tail , null) ;
-        tail = new_Node ;
+        
+        if(head == null && tail == null) {
+            DoubleNode new_Node = new DoubleNode(element , null , null) ;
+            head = new_Node ;
+            tail = new_Node ;
+        }else {
+            DoubleNode new_Node = new DoubleNode(element , tail , null) ;
+            tail = new_Node ;
+        }
     }
 
     @Override
@@ -99,32 +103,30 @@ public class DoubleLinkedList implements ILinkedList{
     }
 
     @Override
+    
     public void remove(int index) {
         
-        if(this.head == null) {
-            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+        /*if(this.head == null || index >= size || index < 0) {
+            throw new IllegalStateException("Error") ;
+        }else if(index == 0) {
+            this.head = head.getNext() ;
+            return ;
         }
-        if(index == 0) {
-            this.remove() ;
-            return;
+
+        DoubleNode temp = this.head ;
+        //temp = this.head;
+        for(int i = 0; i < index-1; i++) {
+            temp = temp.getNext() ;
         }
-        SingleNode temp;
-        if(index <= size - 1 && index >= 0) {
-            temp = this.head;
-            for(int i = 0; i < index-1; i++) {
-                temp = temp.getNext();
-            }
-        }
-        else {
-            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
-        }
-        SingleNode temp2 = temp.getNext();
-        temp.setNext(temp2.getNext());
-        temp2.setNext(null);
-        temp2 = null;
-        size--;
+
+        DoubleNode temp2 = temp.getNext() ;
+        temp.setNext(temp2.getNext()) ;
+        //temp2.setNext(null);
+        temp2 = null ;
+        size-- ;*/
     
     }
+    
 
     @Override
     public int size() {
@@ -133,8 +135,30 @@ public class DoubleLinkedList implements ILinkedList{
 
     @Override
     public ILinkedList sublist(int fromIndex, int toIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sublist'");
+        if(fromIndex < 0 || toIndex > size || fromIndex > toIndex) {
+            throw new IllegalStateException("Error");
+        }else if(fromIndex == 0 && toIndex == size) {
+            return this ;
+        }
+
+        DoubleNode temp = this.head ;
+        DoubleNode temp2 = this.head ;
+
+        for(int i = 0 ; i < fromIndex ; i++) {
+            temp = temp.getNext();
+        }
+
+        for(int i = 0 ; i < toIndex + 1 ; i++) {
+            temp2 = temp2.getNext();
+        }
+
+        DoubleLinkedList newList = new DoubleLinkedList();
+        
+        while(temp != temp2) {
+            newList.add(temp.getValue()) ;
+            temp = temp.getNext() ;
+        }
+        return newList ;
     }
 
     @Override
@@ -150,6 +174,44 @@ public class DoubleLinkedList implements ILinkedList{
             }
         }
         return false ;
+    }
+
+    public void print() {
+
+        if(this.isEmpty()) {
+            System.out.println("[]");
+            return;
+        }
+        DoubleNode temp = head ;
+        System.out.print("[") ;
+
+        while(temp.getNext() != null) {
+            System.out.print(temp.getValue() + ", ");
+            temp = temp.getNext();
+        }
+
+        System.out.println(temp.getValue() + "]");
+        //System.out.println();
+    }
+    
+    public DoubleLinkedList take() {
+
+        Scanner input = new Scanner(System.in) ;
+        String str = input.nextLine() ;
+        input.close() ;
+        str.replaceAll("[|]", "") ;
+        String[] str_array = str.split(", ") ;
+
+        DoubleLinkedList list = new DoubleLinkedList() ;
+        for (String s : str_array) {
+            list.add(Integer.parseInt(s)) ;
+        }
+        return list ;
+    }
+
+    public void main(String[] args) {
+        DoubleLinkedList list1 = take() ;
+        list1.print() ;
     }
     
 }

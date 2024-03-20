@@ -167,11 +167,18 @@ public class SingleLinkedList implements ILinkedList {
             temp2 = temp2.getNext();
         }
         SingleLinkedList newList = new SingleLinkedList();
+<<<<<<< HEAD
+        while(temp != temp2)
+        {
+            newList.addAtEnd(temp.getValue()) ;
+            temp = temp.getNext() ;
+=======
         while (temp != temp2) {
             newList.addAtEnd(temp.getValue());
             temp = temp.getNext();
+>>>>>>> 20d94ff7344c380a359f3f9b2a8760d284e3a56b
         }
-        return newList;
+        return newList ;
     }
 
     @Override
