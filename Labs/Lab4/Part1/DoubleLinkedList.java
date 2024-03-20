@@ -23,21 +23,10 @@ public class DoubleLinkedList implements ILinkedList {
 
     @Override
     public void add(int index, Object element) {
-<<<<<<< HEAD
-        
-        if(index < 0 || index >= size){
-            System.out.println("Error") ;
-            System.exit(0);
-        
-        }else if(index == size-1) {
-            add(element);
-            return ;
-=======
         if(index < 0 || index > size)
         {
             System.out.println("Error") ;
             System.exit(0) ;
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
         }
         DoubleNode newNode = new DoubleNode(element);
         if(index == 0)
@@ -116,12 +105,7 @@ public class DoubleLinkedList implements ILinkedList {
             System.out.println("Error") ;
             System.exit(0) ;
         }
-<<<<<<< HEAD
- ;
- System.exit(0) ;
-=======
         
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
         DoubleNode temp = head ;
         for(int i = 0 ; i < index ; i++){
             temp = temp.getNext();
@@ -200,19 +184,11 @@ public class DoubleLinkedList implements ILinkedList {
         for (int i = 0; i < toIndex + 1; i++) {
             temp2 = temp2.getNext();
         }
-<<<<<<< HEAD
-        SingleLinkedList newList = new SingleLinkedList();
-
-        while(temp != temp2)
-        {
-            newList.addAtEnd(temp.getValue()) ;
-=======
         DoubleLinkedList newList = new DoubleLinkedList();
 
         while(temp != temp2)
         {
             newList.add(temp.getValue()) ;
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
             temp = temp.getNext() ;
         }
         return newList ;
@@ -250,11 +226,7 @@ public class DoubleLinkedList implements ILinkedList {
 
     public static void main(String[] args) {
 
-<<<<<<< HEAD
-        SingleLinkedList list = new SingleLinkedList();
-=======
         DoubleLinkedList list = new DoubleLinkedList();
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
         Scanner input = new Scanner(System.in) ;
             
             String str = input.nextLine().replaceAll("\\[|\\]", "");
@@ -264,11 +236,7 @@ public class DoubleLinkedList implements ILinkedList {
             String[] str_array = str.split(", ") ;
             list.clear();
             for (String s : str_array) {
-<<<<<<< HEAD
-                list.addAtEnd(Integer.parseInt(s));
-=======
                 list.add(Integer.parseInt(s));
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
             }
             
         }
@@ -286,11 +254,7 @@ public class DoubleLinkedList implements ILinkedList {
             return;
         }else if(str.compareTo("add") == 0) {
             int num = input.nextInt();
-<<<<<<< HEAD
-            list.addAtEnd(num);
-=======
             list.add(num);
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
             list.print();
             input.close();
             return;
@@ -329,13 +293,8 @@ public class DoubleLinkedList implements ILinkedList {
         }else if(str.compareTo("sublist") == 0) {
             int fromIndex = input.nextInt();
             int toIndex = input.nextInt();
-<<<<<<< HEAD
-            SingleLinkedList list2 = new SingleLinkedList();
-            list2 = (SingleLinkedList) list.sublist(fromIndex, toIndex);
-=======
             DoubleLinkedList list2 = new DoubleLinkedList();
             list2 = (DoubleLinkedList) list.sublist(fromIndex, toIndex);
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
             list2.print();
             input.close();
             return;
