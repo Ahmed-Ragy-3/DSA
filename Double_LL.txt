@@ -1,6 +1,124 @@
-package Labs.Lab4.Part1;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
 
-import java.util.Scanner;
+interface ILinkedList {
+/**
+* Inserts a specified element at the specified position in the list.
+* @param index
+* @param element
+*/
+public void add(int index, Object element);
+/**
+* Inserts the specified element at the end of the list.
+* @param element
+*/
+public void add(Object element);
+/**
+* @param index
+* @return the element at the specified position in this list.
+*/
+public Object get(int index);
+
+/**
+* Replaces the element at the specified position in this list with the
+* specified element.
+* @param index
+* @param element
+*/
+public void set(int index, Object element);
+/**
+* Removes all of the elements from this list.
+*/
+public void clear();
+/**
+* @return true if this list contains no elements.
+*/
+public boolean isEmpty();
+/**
+* Removes the element at the specified position in this list.
+* @param index
+*/
+public void remove(int index);
+/**
+* @return the number of elements in this list.
+*/
+public int size();
+/**
+* @param fromIndex
+* @param toIndex
+* @return a view of the portion of this list between the specified fromIndex and toIndex, inclusively.
+*/
+public ILinkedList sublist(int fromIndex, int toIndex);
+/**
+* @param o
+* @return true if this list contains an element with the same value as the specified element.
+*/
+public boolean contains(Object o);
+}
+
+
+class DoubleNode {
+    
+    private Object value;
+    private DoubleNode next;
+    private DoubleNode prev;
+
+    private static int numberOfNodes = 0;
+
+    // -------------------------------Constructors---------------------------------
+    public DoubleNode(Object value) {
+        this.value = value;
+        this.next = null;
+        this.prev = null;
+    }
+    public DoubleNode(Object value, DoubleNode next, DoubleNode prev) {
+        this.value = value;
+        this.next = next;
+        this.prev = prev;
+    }
+
+    public DoubleNode() {
+        this.value = null;
+        this.next = null;
+        this.prev = null;
+    }
+    // -------------------------------endConstructors-------------------------------
+
+    // -------------------------------setterAndGetters------------------------------
+    public Object getValue() {
+        return value;
+    }
+
+    public DoubleNode getNext() {
+        return next;
+    }
+
+    public DoubleNode getPrev() {
+        return prev;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
+    public void setNext(DoubleNode next) {
+        this.next = next;
+    }
+
+    public void setPrev(DoubleNode prev) {
+        this.prev = prev;
+    }
+    // -----------------------------endSetterAndGetters-------------------------------
+
+    public static int getNumOfNodes() {
+        return numberOfNodes;
+    }
+
+}
+
 
 public class DoubleLinkedList implements ILinkedList {
     
@@ -23,21 +141,10 @@ public class DoubleLinkedList implements ILinkedList {
 
     @Override
     public void add(int index, Object element) {
-<<<<<<< HEAD
-        
-        if(index < 0 || index >= size){
-            System.out.println("Error") ;
-            System.exit(0);
-        
-        }else if(index == size-1) {
-            add(element);
-            return ;
-=======
         if(index < 0 || index > size)
         {
             System.out.println("Error") ;
             System.exit(0) ;
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
         }
         DoubleNode newNode = new DoubleNode(element);
         if(index == 0)
@@ -116,12 +223,7 @@ public class DoubleLinkedList implements ILinkedList {
             System.out.println("Error") ;
             System.exit(0) ;
         }
-<<<<<<< HEAD
- ;
- System.exit(0) ;
-=======
         
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
         DoubleNode temp = head ;
         for(int i = 0 ; i < index ; i++){
             temp = temp.getNext();
@@ -200,19 +302,11 @@ public class DoubleLinkedList implements ILinkedList {
         for (int i = 0; i < toIndex + 1; i++) {
             temp2 = temp2.getNext();
         }
-<<<<<<< HEAD
-        SingleLinkedList newList = new SingleLinkedList();
-
-        while(temp != temp2)
-        {
-            newList.addAtEnd(temp.getValue()) ;
-=======
         DoubleLinkedList newList = new DoubleLinkedList();
 
         while(temp != temp2)
         {
             newList.add(temp.getValue()) ;
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
             temp = temp.getNext() ;
         }
         return newList ;
@@ -250,11 +344,7 @@ public class DoubleLinkedList implements ILinkedList {
 
     public static void main(String[] args) {
 
-<<<<<<< HEAD
-        SingleLinkedList list = new SingleLinkedList();
-=======
         DoubleLinkedList list = new DoubleLinkedList();
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
         Scanner input = new Scanner(System.in) ;
             
             String str = input.nextLine().replaceAll("\\[|\\]", "");
@@ -264,11 +354,7 @@ public class DoubleLinkedList implements ILinkedList {
             String[] str_array = str.split(", ") ;
             list.clear();
             for (String s : str_array) {
-<<<<<<< HEAD
-                list.addAtEnd(Integer.parseInt(s));
-=======
                 list.add(Integer.parseInt(s));
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
             }
             
         }
@@ -286,11 +372,7 @@ public class DoubleLinkedList implements ILinkedList {
             return;
         }else if(str.compareTo("add") == 0) {
             int num = input.nextInt();
-<<<<<<< HEAD
-            list.addAtEnd(num);
-=======
             list.add(num);
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
             list.print();
             input.close();
             return;
@@ -329,13 +411,8 @@ public class DoubleLinkedList implements ILinkedList {
         }else if(str.compareTo("sublist") == 0) {
             int fromIndex = input.nextInt();
             int toIndex = input.nextInt();
-<<<<<<< HEAD
-            SingleLinkedList list2 = new SingleLinkedList();
-            list2 = (SingleLinkedList) list.sublist(fromIndex, toIndex);
-=======
             DoubleLinkedList list2 = new DoubleLinkedList();
             list2 = (DoubleLinkedList) list.sublist(fromIndex, toIndex);
->>>>>>> cf31bfe6a60a746f205fc4a311ea4c893112ae69
             list2.print();
             input.close();
             return;
