@@ -2,6 +2,7 @@ package Labs.Lab4.Part1;
 
 
 
+
 public interface ILinkedList {
     /**
      * Inserts a specified element at the specified position in the list.

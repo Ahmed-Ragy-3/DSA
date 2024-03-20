@@ -1,5 +1,4 @@
 package Labs.Lab4.Part1;
-
 public class SingleLinkedList implements ILinkedList{
 
     private SingleNode head;
@@ -65,6 +64,7 @@ public class SingleLinkedList implements ILinkedList{
         SingleNode newnNode = new SingleNode(element);
         newnNode.setNext(temp.getNext());
         temp.setNext(newnNode);
+        size++;
     }
 
     @Override
@@ -197,6 +197,7 @@ public class SingleLinkedList implements ILinkedList{
         SingleNode temp = head;
         while(temp != null) {
             if(temp.getValue() == o) return true;
+            temp = temp.getNext();
         }
         return false;
     }
@@ -216,33 +217,5 @@ public class SingleLinkedList implements ILinkedList{
         }
         System.out.print(temp.getValue() + "]");
         System.out.println();
-    }
-    
-    ////////////////////
-    public static void main(String[] args) {
-        SingleLinkedList list = new SingleLinkedList();
-        list.addAtEnd(1);
-        list.addAtEnd(2);
-        list.addAtEnd(3);
-        list.addAtEnd(4);
-        list.addAtEnd(5);
-        list.addAtEnd(6);
-        list.addAtEnd(7);
-        list.addAtEnd(8);
-        list.addAtEnd(9);
-        list.addAtEnd(10);
-        list.addAtEnd(11);
-        list.addAtEnd(12);
-        list.addAtEnd(13);
-        list.addAtEnd(14);
-        list.addAtEnd(15);
-        list.addAtEnd(16);
-        list.addAtEnd(17);
-        list.addAtEnd(18);
-        list.addAtEnd(19);
-
-        System.out.println(list.size());
-        SingleLinkedList list2 = (SingleLinkedList) list.sublist(0, 18);
-        list2.print();
     }
 }
