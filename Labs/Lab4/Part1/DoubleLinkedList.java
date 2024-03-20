@@ -1,5 +1,7 @@
 package Labs.Lab4.Part1;
 
+import ILinkedList;
+
 public class DoubleLinkedList implements ILinkedList{
 
     @Override
