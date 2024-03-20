@@ -1,53 +1,133 @@
 package Labs.Lab4.Part1;
 
 public class DoubleLinkedList implements ILinkedList{
+    
+    private DoubleNode head ;
+    private DoubleNode tail ;
+    private int size ;
+    
+    //constructors
+    public DoubleLinkedList() {
+        this.head = null ;
+        this.tail = null ;
+        this.size = 0 ;
+    }
+    public DoubleLinkedList(DoubleNode head) {
+        this.head = head ;
+        this.tail = head ;
+        this.size++ ;
+    }
 
     @Override
     public void add(int index, Object element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        
+        if(index < 0 || index > size){
+            System.out.println("There is no index " + index);
+            return ;
+        }
+        DoubleNode newNode = new DoubleNode(value);
+        if(index == 0) {
+            addFirst(value);
+            return ;
+        }
+        if(index == size) {
+            addLast(value);
+            return ;
+        }
+        DoubleNode temp = head;
+        for(int i = 0; i < index - 1; i++){
+            temp = temp.getNext();
+        }
+
+        newNode.setNext(temp.getNext());
+        temp.setNext(newNode);
+        newNode.setPrev(temp);
+        temp = temp.getNext().getNext();
+        temp.setPrev(newNode);
+        size++;
+        return;
+        
     }
 
     @Override
     public void add(Object element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        DoubleNode new_Node = new DoubleNode(element , tail , null) ;
+        tail = new_Node ;
     }
 
     @Override
     public Object get(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+
+        if(index < 0 || index >= size) {
+            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+        }
+        DoubleNode temp = head ;
+
+        for(int i = 0 ; i < index ; i++) {
+            temp = temp.getNext();
+        }
+        return temp.getValue();
     }
 
     @Override
     public void set(int index, Object element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'set'");
+        
+        if(index < 0 || index >= size){
+            throw new IllegalStateException("There is no index = " + index + ", the size is " + size) ;
+        }
+
+        DoubleNode temp = head ;
+        for(int i = 0 ; i < index ; i++){
+            temp = temp.getNext();
+        }
+
+        temp.setValue(element);
+    
     }
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        this.head = null ;
+        this.tail = null ;
+        this.size = 0 ;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return (head == null)  ;
     }
 
     @Override
     public void remove(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        
+        if(this.head == null) {
+            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+        }
+        if(index == 0) {
+            this.remove() ;
+            return;
+        }
+        SingleNode temp;
+        if(index <= size - 1 && index >= 0) {
+            temp = this.head;
+            for(int i = 0; i < index-1; i++) {
+                temp = temp.getNext();
+            }
+        }
+        else {
+            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+        }
+        SingleNode temp2 = temp.getNext();
+        temp.setNext(temp2.getNext());
+        temp2.setNext(null);
+        temp2 = null;
+        size--;
+    
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return this.size ;
     }
 
     @Override
@@ -58,8 +138,17 @@ public class DoubleLinkedList implements ILinkedList{
 
     @Override
     public boolean contains(Object o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        if(isEmpty()) {
+            return false ;
+        }
+
+        DoubleNode temp = head ;
+        while (temp != null) {
+            if(temp.getValue() == o) {
+                return true ;
+            }
+        }
+        return false ;
     }
     
 }
