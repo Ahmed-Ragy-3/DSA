@@ -1,4 +1,5 @@
 package Labs.Lab4.Part1;
+import java.util.Scanner;
 
 public class SingleLinkedList implements ILinkedList {
 
@@ -35,7 +36,8 @@ public class SingleLinkedList implements ILinkedList {
     public void add(int index, Object element) {
         if (head == null) {
             if (index != 0) {
-                throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+                System.out.println("Error");
+                System.exit(0);
             } else {
                 this.add(element);
                 return;
@@ -48,18 +50,19 @@ public class SingleLinkedList implements ILinkedList {
             this.addAtEnd(element);
             return;
         }
-        SingleNode temp;
+        SingleNode temp = head;
         if (index <= size - 1 && index >= 0) {
             temp = this.head;
             for (int i = 0; i < index - 1; i++) {
                 temp = temp.getNext();
             }
         } else {
-            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+            System.out.println("Error");
+            System.exit(0);
         }
-        SingleNode newnNode = new SingleNode(element);
-        newnNode.setNext(temp.getNext());
-        temp.setNext(newnNode);
+        SingleNode newNode = new SingleNode(element);
+        newNode.setNext(temp.getNext());
+        temp.setNext(newNode);
         size++;
     }
 
@@ -79,7 +82,8 @@ public class SingleLinkedList implements ILinkedList {
     @Override
     public Object get(int index) {
         if (index < 0 || index >= size) {
-            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+            System.out.println("Error");
+            System.exit(0);
         }
         SingleNode temp = head;
         for (int i = 0; i < index; i++) {
@@ -92,7 +96,8 @@ public class SingleLinkedList implements ILinkedList {
     public void set(int index, Object element) {
 
         if (index < 0 || index >= size) {
-            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+            System.out.println("Error");
+            System.exit(0);
         }
         SingleNode temp = head;
         for (int i = 0; i < index; i++) {
@@ -126,20 +131,22 @@ public class SingleLinkedList implements ILinkedList {
     @Override
     public void remove(int index) {
         if (this.head == null) {
-            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+            System.out.println("Error");
+            System.exit(0);
         }
         if (index == 0) {
             this.remove();
             return;
         }
-        SingleNode temp;
+        SingleNode temp = head;
         if (index <= size - 1 && index >= 0) {
             temp = this.head;
             for (int i = 0; i < index - 1; i++) {
                 temp = temp.getNext();
             }
         } else {
-            throw new IllegalStateException("There is no index " + index + ", the size is " + size);
+            System.out.println("Error");
+            System.exit(0);
         }
         SingleNode temp2 = temp.getNext();
         temp.setNext(temp2.getNext());
@@ -156,7 +163,8 @@ public class SingleLinkedList implements ILinkedList {
     @Override
     public ILinkedList sublist(int fromIndex, int toIndex) {
         if (fromIndex < 0 || toIndex >= size || fromIndex > toIndex) {
-            throw new IllegalStateException("There is an error in indexing, the size is " + size);
+            System.out.println("Error");
+            System.exit(0);
         }
         SingleNode temp = this.head;
         SingleNode temp2 = this.head;
@@ -201,32 +209,134 @@ public class SingleLinkedList implements ILinkedList {
         System.out.print(temp.getValue() + "]");
         System.out.println();
     }
+
+    public void take() {
+        Scanner input = new Scanner(System.in) ;
+        
+        String str = input.nextLine().replaceAll("\\[|\\]", "");
+        if(str.compareTo("") == 0)
+        {
+            this.clear();
+            return;
+        }
+        input.close() ;
+        String[] str_array = str.split(", ") ;
+        this.clear();
+        for (String s : str_array) {
+            this.addAtEnd(Integer.parseInt(s));
+        }
+    }
 public static void main(String[] args){
     SingleLinkedList list = new SingleLinkedList();
-    list.addAtEnd(1);
-    list.addAtEnd(2);
-    list.addAtEnd(3);
-    list.addAtEnd(4);
-    list.addAtEnd(5);
-    list.addAtEnd(6);
-    list.addAtEnd(7);
-    list.addAtEnd(8);
-    list.addAtEnd(9);
-    list.addAtEnd(10);
-    list.addAtEnd(11);
-    list.addAtEnd(12);
-    list.addAtEnd(13);
-    list.addAtEnd(14);
-    list.addAtEnd(15);
-    list.addAtEnd(16);
-    list.addAtEnd(17);
-    list.addAtEnd(18);
-    list.addAtEnd(19);
-    list.remove();
-    list.remove(3);
-    list.remove(3);list.remove(3);list.remove(3);list.remove(3);list.remove(3);
-    list.print();
-    System.out.println(list.size());
+    Scanner input = new Scanner(System.in) ;
+        
+        String str = input.nextLine().replaceAll("\\[|\\]", "");
+        if(str.compareTo("") == 0)
+        {
+            list.clear();
+        }
+    else{
+        String[] str_array = str.split(", ") ;
+        list.clear();
+        for (String s : str_array) {
+            list.addAtEnd(Integer.parseInt(s));
+        }
+        
+    }
+        
+        
+    str = input.nextLine();
+
+    if(str.compareTo("isEmpty") == 0) {
+        if(list.isEmpty())
+        {
+            System.out.println("True");
+        }   
+        else
+        {
+            System.out.println("False");
+        }
+        input.close();
+        return;
+    }
+    else if(str.compareTo("add") == 0){
+        int num = input.nextInt();
+        list.addAtEnd(num);
+        list.print();
+        input.close();
+        return;
+    }
+    else if(str.compareTo("addToIndex") == 0){
+        int index = input.nextInt();
+        int num = input.nextInt();
+        list.add(index, num);
+        list.print();
+        input.close();
+        return;
+    }
+    else if(str.compareTo("set") == 0)
+    {
+        int index = input.nextInt();
+        int num = input.nextInt();
+        list.set(index, num);
+        list.print();
+        input.close();
+        return;
+    }
+    else if(str.compareTo("get") == 0)
+    {
+        int index = input.nextInt();
+        System.out.println(list.get(index));
+        input.close();
+        return;
+    }
+    else if(str.compareTo("size") == 0)
+    {
+        System.out.println(list.size());
+        input.close();
+        return;
+    }
+    else if(str.compareTo("contains") == 0)
+    {
+        int index = input.nextInt();
+        if(list.contains(index))
+        {
+            System.out.println("True");
+        }   
+        else
+        {
+            System.out.println("False");
+        }
+        input.close();
+        return;
+    }
+    else if(str.compareTo("sublist") == 0)
+    {
+        int fromIndex = input.nextInt();
+        int toIndex = input.nextInt();
+        SingleLinkedList list2 = new SingleLinkedList();
+        list2 = (SingleLinkedList) list.sublist(fromIndex, toIndex);
+        list2.print();
+        input.close();
+        return;
+    }
+    else if(str.compareTo("remove") == 0)
+    {
+        
+        int index = input.nextInt();
+        list.remove(index);
+        list.print();
+        input.close();
+        return;
+    }
+    else if(str.compareTo("clear") == 0)
+    {
+        list.clear();
+        list.print();
+        
+    }
+    
+    input.close();
 }
 
 }
