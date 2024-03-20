@@ -2,7 +2,7 @@ package Labs.Lab4.Part1;
 
 
 
-class SingleNode {
+public class SingleNode {
     static private int numberOfNodes = 0;
     private Object value;
     private SingleNode next;
