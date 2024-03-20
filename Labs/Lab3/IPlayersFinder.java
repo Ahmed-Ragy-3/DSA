@@ -1,4 +1,5 @@
 package Labs.Lab3;
+
 import java.awt.Point;
 import java.util.*;
 
