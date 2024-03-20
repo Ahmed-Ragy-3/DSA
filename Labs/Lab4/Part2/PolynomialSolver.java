@@ -1,11 +1,12 @@
 package Labs.Lab4.Part2;
 import Labs.Lab4.Part1.SingleLinkedList;
 public class PolynomialSolver{
-    static SingleLinkedList A = new SingleLinkedList();
-    static SingleLinkedList B = new SingleLinkedList();
-    static SingleLinkedList C = new SingleLinkedList();
 
+    static SingleLinkedList A = new SingleLinkedList() ;
+    static SingleLinkedList B = new SingleLinkedList() ;
+    static SingleLinkedList C = new SingleLinkedList() ;
 
+    static byte[] indicators = {1,2,3} ;
     
     public static void setPolynomial(char poly, int[] terms) {
         // TODO Auto-generated method stub
