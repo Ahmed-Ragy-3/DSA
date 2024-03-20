@@ -1,3 +1,5 @@
+package Labs.Lab4.Part1;
+
 public class SingleLinkedList implements ILinkedList{
 
     private SingleNode head;
