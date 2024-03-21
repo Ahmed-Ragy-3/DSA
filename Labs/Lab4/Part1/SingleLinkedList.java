@@ -1,4 +1,5 @@
 package Labs.Lab4.Part1;
+
 import java.util.Scanner;
 
 public class SingleLinkedList implements ILinkedList {
@@ -36,7 +37,7 @@ public class SingleLinkedList implements ILinkedList {
     public void add(int index, Object element) {
         if (head == null) {
             if (index != 0) {
-                System.out.println("Error");
+                System.out.println("ErrorA");
                 System.exit(0);
             } else {
                 this.add(element);
@@ -57,7 +58,7 @@ public class SingleLinkedList implements ILinkedList {
                 temp = temp.getNext();
             }
         } else {
-            System.out.println("Error");
+            System.out.println("ErrorB");
             System.exit(0);
         }
         SingleNode newNode = new SingleNode(element);
@@ -67,7 +68,7 @@ public class SingleLinkedList implements ILinkedList {
     }
 
     @Override
-    public void add(Object element) { //add first
+    public void add(Object element) {
         SingleNode newNode = new SingleNode(element);
         newNode.setNext(this.head);
         if (head == null) {
@@ -82,7 +83,7 @@ public class SingleLinkedList implements ILinkedList {
     @Override
     public Object get(int index) {
         if (index < 0 || index >= size) {
-            System.out.println("Error");
+            System.out.println("ErrorC");
             System.exit(0);
         }
         SingleNode temp = head;
@@ -96,7 +97,7 @@ public class SingleLinkedList implements ILinkedList {
     public void set(int index, Object element) {
 
         if (index < 0 || index >= size) {
-            System.out.println("Error");
+            System.out.println("ErrorD");
             System.exit(0);
         }
         SingleNode temp = head;
@@ -131,7 +132,7 @@ public class SingleLinkedList implements ILinkedList {
     @Override
     public void remove(int index) {
         if (this.head == null) {
-            System.out.println("Error");
+            System.out.println("ErrorE");
             System.exit(0);
         }
         if (index == 0) {
@@ -145,7 +146,7 @@ public class SingleLinkedList implements ILinkedList {
                 temp = temp.getNext();
             }
         } else {
-            System.out.println("Error");
+            System.out.println("ErrorF");
             System.exit(0);
         }
         SingleNode temp2 = temp.getNext();
@@ -163,7 +164,7 @@ public class SingleLinkedList implements ILinkedList {
     @Override
     public ILinkedList sublist(int fromIndex, int toIndex) {
         if (fromIndex < 0 || toIndex >= size || fromIndex > toIndex) {
-            System.out.println("Error");
+            System.out.println("ErrorG");
             System.exit(0);
         }
         SingleNode temp = this.head;
@@ -337,6 +338,18 @@ public static void main(String[] args){
     }
     
     input.close();
+}
+
+public int[] toArray() {
+    int[] array = new int[this.size];
+    SingleNode temp = head;
+
+    for(int i = 0; i < array.length; i++)
+    {
+        array[i] = (Integer)temp.getValue();
+        temp = temp.getNext();
+    }
+    return array;
 }
 
 }
