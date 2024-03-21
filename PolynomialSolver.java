@@ -1,5 +1,5 @@
-package Labs.Lab4.Part2;
-import Labs.Lab4.Part1.*;
+
+
 public class PolynomialSolver{
     
     static SingleLinkedList[] array = new SingleLinkedList[3];
@@ -16,11 +16,19 @@ public class PolynomialSolver{
     
     public static String print(char poly) {
         //display ----> x^3-9x^2+26x-24
+        
         SingleLinkedList list = array[(int)(poly - 'A')] ;
         String str = new String() ;
         SingleNode temp = list.head ;
-        str = (String)(temp.getValue()) ;
+        str = temp.getValue().toString() ;
 
+        if((Integer)temp.getValue() == 0) {
+        }else if((Integer)temp.getValue() < 0) {
+            str = ((temp.getValue().toString()));
+        }else {
+            str = ("+" + (temp.getValue()));
+        }
+        temp = temp.next;
         for (int i = 1 ; i < list.size ; i++) {
 
             if((Integer)temp.getValue() == 0) {
@@ -30,9 +38,9 @@ public class PolynomialSolver{
             }else {
                 str = ("+" + (temp.getValue()) + "x^" + (list.size-i)) + str ;
             }
-
+            temp = temp.next;
         }
-
+        // 7x^2+8x+9
         return str ;
     }
 
@@ -120,7 +128,7 @@ public class PolynomialSolver{
     }
     
     public static void main(String[] args) {
-        int[] array1 = {1, 1, 1};
+        int[] array1 = {7, 8, 9};
         int[] array2 = {0, 1, 0, 2, 10};  
         int[] array3 = {4, 12, 3, 1};
         PolynomialSolver.setPolynomial('A', array1);
@@ -151,5 +159,6 @@ public class PolynomialSolver{
         }
         System.out.println();
         System.out.println(PolynomialSolver.evaluatePolynomial('A', 2));
+        System.out.println(PolynomialSolver.print('A'));
     }
 }
