@@ -18,7 +18,7 @@ public class PolynomialSolver{
         String str = new String() ;
         SingleNode temp = list.head ;
         str = (String)(temp.getValue()) ;
-        
+
         for (int i = 1 ; i < list.size ; i++) {
 
             if((Integer)temp.getValue() == 0) {
@@ -77,6 +77,6 @@ public class PolynomialSolver{
     }
     
     public static void main(String[] args) {
-        
+        setPolynomial('A', null) ;
     }
 }
