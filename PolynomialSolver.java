@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 
 public class PolynomialSolver{
     
@@ -12,45 +12,60 @@ public class PolynomialSolver{
             list.add(Integer.valueOf(terms[i]));
         }
     }
-
     
-    public static String print(char poly) {
+    public static String print_poly(char poly) {
         //display ----> x^3-9x^2+26x-24
-        
+        // input ----> -24 , 26 , -9 , 1
+        // 0 , 1 , 0 , 2 , 10
         SingleLinkedList list = array[(int)(poly - 'A')] ;
+        if(list.isEmpty()) { return "" ;}
+
         String str = new String() ;
         SingleNode temp = list.head ;
-        str = temp.getValue().toString() ;
 
-        if((Integer)temp.getValue() == 0) {
-        }else if((Integer)temp.getValue() < 0) {
-            str = ((temp.getValue().toString())) ;
-        }else {
-            str = ("+" + (temp.getValue()));
-        }
-        temp = temp.next;
-        for (int i = 1 ; i < list.size ; i++) {
+        for (int i = 0 ; i < list.size ; i++) {
 
-            if((Integer)temp.getValue() == 0) {
+            if((Integer)temp.getValue() == 0) { 
+                temp = temp.next ;
                 continue ;
-            }else if((Integer)temp.getValue() < 0) {
-                str = ((temp.getValue()) + "x^" + (list.size-i)) + str ;
+            }
+
+            if(i == 1) { // x^1
+
+                if((Integer)temp.value < 0) {
+                    str = ((temp.value) + "x") + str ;
+                }else {
+                    str = ("+" + (temp.value) + "x") + str ;
+                }
+
             }else {
-                str = ("+" + (temp.getValue()) + "x^" + (list.size-i)) + str ;
+
+                if((Integer)temp.value < 0) {
+                    str = ((temp.value) + "x^" + (i)) + str ;
+                }else {
+                    str = ("+" + (temp.value) + "x^" + (i)) + str ;
+                }
+
             }
             temp = temp.next;
         }
-        // 7x^2+8x+9
+        
+        // handle first element
+        if(str.charAt(0) == '+') {
+            str = str.replaceFirst("\\+" , "") ;
+        }
+
+        str = str.replaceAll("x\\^0", "") ;
+        str = str.replaceAll("1x", "x") ;
+        
         return str ;
     }
-
     
     public static void clearPolynomial(char poly) {
         SingleLinkedList list = array[(int)(poly - 'A')];
         list.clear();
     }
 
-    
     public static int evaluatePolynomial(char poly, float value) {
         SingleLinkedList list = array[(int)(poly - 'A')];
         SingleNode temp = list.head;
@@ -63,7 +78,6 @@ public class PolynomialSolver{
         return result;
     }
 
-    
     public static int[] add(char poly1, char poly2) {
         
         SingleLinkedList list1 = array[(int)(poly1 - 'A')] ;
@@ -91,8 +105,7 @@ public class PolynomialSolver{
         return result.toArray();
 
     }
-
-    
+ 
     public static int[] subtract(char poly1, char poly2) {
                 
         SingleLinkedList list1 = array[(int)(poly1 - 'A')];
@@ -117,37 +130,89 @@ public class PolynomialSolver{
             result.addAtEnd((Integer)temp1.getValue());
             temp1 = temp1.getNext();
         }
-        return result.toArray();
+        return result.toArray() ;
     }
 
-    
     public static int[] multiply(char poly1, char poly2) {
-        int[] list1 = array[(int)(poly1 - 'A')].toArray();
-        int[] list2 = array[(int)(poly2 - 'A')].toArray();
-        int[] result = new int[list1.length + list2.length - 1]; 
-        for (int i = 0; i < list1.length; i++) {
-            for (int j = 0; j < list2.length; j++) {
-                result[i + j] += list1[i] * list2[j];
+
+        int[] list1 = array[(int)(poly1 - 'A')].toArray() ;
+        int[] list2 = array[(int)(poly2 - 'A')].toArray() ;
+        int[] result = new int[list1.length + list2.length - 1] ;
+
+        for (int i = 0 ; i < list1.length ; i++) {
+            for (int j = 0 ; j < list2.length ; j++) {
+                result[i + j] += list1[i] * list2[j] ;
             }
         }
         return result;
     }
+
+
+    public static int[] coeff_array(String str) { // convert input to terms[] array
+
+        String[] str_array = str.split(",") ;
+        int[] coeff = new int[str_array.length] ;
+        //list.clear();
+        for (int i = 0 ; i < coeff.length ; i++) {
+            coeff[i] = Integer.parseInt(str_array[i]) ;
+        }
+        return coeff ;
+
+    }
     
     public static void main(String[] args) {
-        int[] array1 = {7, 8, 9};
+        int[] array1 = {-8, 45, 0};
         int[] array2 = {0, 1, 0, 2, 10};  
-        int[] array3 = {4, 12, 3, 1};
-        PolynomialSolver.setPolynomial('A', array1);
-        PolynomialSolver.setPolynomial('B', array2);
-        PolynomialSolver.setPolynomial('C', array3);
-        array[0].print();
-        array[1].print();
-        array[2].print();
-        int [] result;
-        result = PolynomialSolver.multiply('C', 'B');
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i] + " ");
+        int[] array3 = {-84, 0, 3, -54};
+
+
+        Scanner input = new Scanner(System.in) ;
+        while(true) {
+
+            String operation = input.nextLine() ;
+
+            if(operation.compareTo("set") == 0) {
+                
+                setPolynomial(input.next().charAt(0) , coeff_array(input.nextLine().replaceAll("\\[|\\]", ""))) ;
+
+            }else if(operation.compareTo("print") == 0) {
+                System.out.println(print_poly(input.next().charAt(0))) ;
+
+            }else if(operation.compareTo("add") == 0) {
+                char c1 = input.next().charAt(0) ;
+                char c2 = input.next().charAt(0) ;
+                add(c1,c2) ;
+                //print_poly(c) ;
+
+            }else if(operation.compareTo("sub") == 0) {
+                char c1 = input.next().charAt(0) ;
+                char c2 = input.next().charAt(0) ;
+                subtract(c1, c2) ;
+
+            }else if(operation.compareTo("mult") == 0) {
+                char c1 = input.next().charAt(0) ;
+                char c2 = input.next().charAt(0) ;
+                multiply(c1,c2) ;
+
+            }else if(operation.compareTo("clear") == 0) {
+                clearPolynomial(input.next().charAt(0)) ;
+                System.out.println("[]") ;
+
+            }else if(operation.compareTo("eval") == 0) {
+                System.out.println(evaluatePolynomial(input.next().charAt(0), input.nextInt())) ;
+            }
         }
-        System.out.println();
+        // PolynomialSolver.setPolynomial('A', array1);
+        // PolynomialSolver.setPolynomial('B', array2);
+        // PolynomialSolver.setPolynomial('C', array3);
+        // array[0].print();
+        // array[1].print();
+        // array[2].print();
+
+        // System.out.println(print_poly('A')) ;
+        // System.out.println(print_poly('B')) ;
+        // System.out.println(print_poly('C')) ;
+
+    
     }
 }
