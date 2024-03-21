@@ -67,7 +67,7 @@ public class SingleLinkedList implements ILinkedList {
     }
 
     @Override
-    public void add(Object element) {
+    public void add(Object element) { //add first
         SingleNode newNode = new SingleNode(element);
         newNode.setNext(this.head);
         if (head == null) {
