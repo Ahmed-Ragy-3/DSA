@@ -147,7 +147,6 @@ public class PolynomialSolver{
         return result;
     }
 
-
     public static int[] coeff_array(String str) { // convert input to terms[] array
 
         String[] str_array = str.split(",") ;
@@ -161,9 +160,9 @@ public class PolynomialSolver{
     }
     
     public static void main(String[] args) {
-        int[] array1 = {-8, 45, 0};
-        int[] array2 = {0, 1, 0, 2, 10};  
-        int[] array3 = {-84, 0, 3, -54};
+        // int[] array1 = {-8, 45, 0};
+        // int[] array2 = {0, 1, 0, 2, 10};  
+        // int[] array3 = {-84, 0, 3, -54};
 
 
         Scanner input = new Scanner(System.in) ;
@@ -172,36 +171,40 @@ public class PolynomialSolver{
             String operation = input.nextLine() ;
 
             if(operation.compareTo("set") == 0) {
-                
-                setPolynomial(input.next().charAt(0) , coeff_array(input.nextLine().replaceAll("\\[|\\]", ""))) ;
+                char c = input.nextLine().charAt(0) ;
+                int[] terms = coeff_array(input.nextLine().replaceAll("\\[|\\]", "")) ;
+                setPolynomial(c , terms) ;
 
             }else if(operation.compareTo("print") == 0) {
-                System.out.println(print_poly(input.next().charAt(0))) ;
+                System.out.println(print_poly(input.nextLine().charAt(0))) ;
 
             }else if(operation.compareTo("add") == 0) {
-                char c1 = input.next().charAt(0) ;
-                char c2 = input.next().charAt(0) ;
+                char c1 = input.nextLine().charAt(0) ;
+                char c2 = input.nextLine().charAt(0) ;
                 add(c1,c2) ;
                 //print_poly(c) ;
 
             }else if(operation.compareTo("sub") == 0) {
-                char c1 = input.next().charAt(0) ;
-                char c2 = input.next().charAt(0) ;
+                char c1 = input.nextLine().charAt(0) ;
+                char c2 = input.nextLine().charAt(0) ;
                 subtract(c1, c2) ;
+                //print_poly(c2) ;
 
             }else if(operation.compareTo("mult") == 0) {
-                char c1 = input.next().charAt(0) ;
-                char c2 = input.next().charAt(0) ;
+                char c1 = input.nextLine().charAt(0) ;
+                char c2 = input.nextLine().charAt(0) ;
                 multiply(c1,c2) ;
 
             }else if(operation.compareTo("clear") == 0) {
-                clearPolynomial(input.next().charAt(0)) ;
+                clearPolynomial(input.nextLine().charAt(0)) ;
                 System.out.println("[]") ;
 
             }else if(operation.compareTo("eval") == 0) {
-                System.out.println(evaluatePolynomial(input.next().charAt(0), input.nextInt())) ;
+                System.out.println(evaluatePolynomial(input.nextLine().charAt(0), input.nextInt())) ;
             }
         }
+        //input.close() ;
+
         // PolynomialSolver.setPolynomial('A', array1);
         // PolynomialSolver.setPolynomial('B', array2);
         // PolynomialSolver.setPolynomial('C', array3);

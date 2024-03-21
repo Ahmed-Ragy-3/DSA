@@ -217,12 +217,13 @@ public class SingleLinkedList implements ILinkedList {
         Scanner input = new Scanner(System.in) ;
         
         String str = input.nextLine().replaceAll("\\[|\\]", "");
+        input.close();
         if(str.compareTo("") == 0)
         {
             this.clear();
             return;
         }
-        input.close() ;
+        //input.close() ;
         String[] str_array = str.split(", ") ;
         this.clear();
         for (String s : str_array) {

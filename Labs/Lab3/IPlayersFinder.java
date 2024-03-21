@@ -109,7 +109,7 @@ public class IPlayersFinder {
       Scanner input = new Scanner(System.in);
       int n = 0;
       String str = input.next();
-      String x = input.next();
+      //String x = input.next();
       if (str.length() == 3) {
          n += Character.digit(str.charAt(0), 10) * 10 + Character.digit(str.charAt(1), 10);
       } else if (str.length() == 4) {
