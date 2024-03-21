@@ -24,7 +24,7 @@ public class PolynomialSolver{
 
         if((Integer)temp.getValue() == 0) {
         }else if((Integer)temp.getValue() < 0) {
-            str = ((temp.getValue().toString()));
+            str = ((temp.getValue().toString())) ;
         }else {
             str = ("+" + (temp.getValue()));
         }
@@ -66,11 +66,11 @@ public class PolynomialSolver{
     
     public static int[] add(char poly1, char poly2) {
         
-        SingleLinkedList list1 = array[(int)(poly1 - 'A')];
-        SingleLinkedList list2 = array[(int)(poly2 - 'A')]; 
-        SingleLinkedList result = new SingleLinkedList();
-        SingleNode temp1 = list1.head;
-        SingleNode temp2 = list2.head;
+        SingleLinkedList list1 = array[(int)(poly1 - 'A')] ;
+        SingleLinkedList list2 = array[(int)(poly2 - 'A')] ;
+        SingleLinkedList result = new SingleLinkedList() ;
+        SingleNode temp1 = list1.head ;
+        SingleNode temp2 = list2.head ;
 
         while(temp1 != null && temp2 != null)
         {
@@ -128,37 +128,40 @@ public class PolynomialSolver{
     }
     
     public static void main(String[] args) {
-        int[] array1 = {7, 8, 9};
-        int[] array2 = {0, 1, 0, 2, 10};  
-        int[] array3 = {4, 12, 3, 1};
-        PolynomialSolver.setPolynomial('A', array1);
-        PolynomialSolver.setPolynomial('B', array2);
-        PolynomialSolver.setPolynomial('C', array3);
-        array[0].print();
-        array[1].print();
-        array[2].print();
-        int [] result;
-        result = PolynomialSolver.add('A', 'B');
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i] + " ");
-        }
-        System.out.println();
-        result = PolynomialSolver.add('C', 'B');
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i] + " ");
-        }
-        System.out.println();
-        result = PolynomialSolver.subtract('C', 'B');
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i] + " ");
-        }
-        System.out.println();
-        result = PolynomialSolver.subtract('C', 'A');
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i] + " ");
-        }
-        System.out.println();
-        System.out.println(PolynomialSolver.evaluatePolynomial('A', 2));
-        System.out.println(PolynomialSolver.print('A'));
+        int[] array1 = {7, 8, 9} ;
+        int[] array2 = {0, 1, 0, 2, 10} ;  
+        int[] array3 = {4, 12, 3, 1} ;
+        PolynomialSolver.setPolynomial('A', array1) ;
+        PolynomialSolver.setPolynomial('B', array2) ;
+        PolynomialSolver.setPolynomial('C', array3) ;
+        array[0].print() ;
+        array[1].print() ;
+        array[2].print() ;
+        int [] result ;
+        // result = PolynomialSolver.add('A', 'B');
+        // for (int i = 0; i < result.length; i++) {
+        //     System.out.print(result[i] + " ");
+        // }
+        // System.out.println();
+        // result = PolynomialSolver.add('C', 'B');
+        // for (int i = 0; i < result.length; i++) {
+        //     System.out.print(result[i] + " ");
+        // }
+        // System.out.println();
+        // result = PolynomialSolver.subtract('C', 'B');
+        // for (int i = 0; i < result.length; i++) {
+        //     System.out.print(result[i] + " ");
+        // }
+        // System.out.println();
+        // result = PolynomialSolver.subtract('C', 'A');
+        // for (int i = 0; i < result.length; i++) {
+        //     System.out.print(result[i] + " ");
+        // }
+        // System.out.println();
+        // System.out.println(PolynomialSolver.evaluatePolynomial('A', 2)) ;
+
+        System.out.println(PolynomialSolver.print('A')) ;
+        System.out.println(PolynomialSolver.print('B')) ;
+        System.out.println(PolynomialSolver.print('C')) ;
     }
 }
