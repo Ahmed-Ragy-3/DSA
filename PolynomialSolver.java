@@ -69,7 +69,7 @@ public class PolynomialSolver{
     public static int evaluatePolynomial(char poly, float value) {
         SingleLinkedList list = array[(int)(poly - 'A')];
         SingleNode temp = list.head;
-        int result = 0;
+        int result = 0 ;
 
         for(int i = 0; i < list.size(); i++) {
             result += (Integer)temp.getValue() * Math.pow(value, i);
@@ -160,10 +160,6 @@ public class PolynomialSolver{
     }
     
     public static void main(String[] args) {
-        // int[] array1 = {-8, 45, 0};
-        // int[] array2 = {0, 1, 0, 2, 10};  
-        // int[] array3 = {-84, 0, 3, -54};
-
 
         Scanner input = new Scanner(System.in) ;
         while(true) {
@@ -204,18 +200,6 @@ public class PolynomialSolver{
             }
         }
         //input.close() ;
-
-        // PolynomialSolver.setPolynomial('A', array1);
-        // PolynomialSolver.setPolynomial('B', array2);
-        // PolynomialSolver.setPolynomial('C', array3);
-        // array[0].print();
-        // array[1].print();
-        // array[2].print();
-
-        // System.out.println(print_poly('A')) ;
-        // System.out.println(print_poly('B')) ;
-        // System.out.println(print_poly('C')) ;
-
     
     }
 }
