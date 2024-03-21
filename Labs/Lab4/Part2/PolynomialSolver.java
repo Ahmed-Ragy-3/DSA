@@ -30,7 +30,7 @@ public class PolynomialSolver{
             }
 
         }
-        //str.replace("^1", "") ;
+
         return str ;
     }
 
