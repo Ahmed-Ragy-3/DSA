@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class PolynomialSolver{
     
-    static SingleLinkedList[] array = new SingleLinkedList[3];
+    static SingleLinkedList[] array = new SingleLinkedList[4];
     
     
     public static void setPolynomial(char poly, int[] terms) {
@@ -69,20 +69,21 @@ public class PolynomialSolver{
     public static int evaluatePolynomial(char poly, float value) {
         SingleLinkedList list = array[(int)(poly - 'A')];
         SingleNode temp = list.head;
-        int result = 0 ;
+        int eval = 0;
 
         for(int i = 0; i < list.size(); i++) {
-            result += (Integer)temp.getValue() * Math.pow(value, i);
+            eval += (Integer)temp.getValue() * Math.pow(value, i);
             temp = temp.getNext();
         }
-        return result;
+        return eval;
     }
 
     public static int[] add(char poly1, char poly2) {
         
         SingleLinkedList list1 = array[(int)(poly1 - 'A')] ;
         SingleLinkedList list2 = array[(int)(poly2 - 'A')] ;
-        SingleLinkedList result = new SingleLinkedList() ;
+        array[3] = new SingleLinkedList();
+        SingleLinkedList result = array[3];
         SingleNode temp1 = list1.head ;
         SingleNode temp2 = list2.head ;
 
@@ -103,14 +104,14 @@ public class PolynomialSolver{
             temp1 = temp1.getNext();
         }
         return result.toArray();
-
     }
  
     public static int[] subtract(char poly1, char poly2) {
                 
         SingleLinkedList list1 = array[(int)(poly1 - 'A')];
         SingleLinkedList list2 = array[(int)(poly2 - 'A')]; 
-        SingleLinkedList result = new SingleLinkedList();
+        array[3] = new SingleLinkedList();
+        SingleLinkedList result = array[3];
         SingleNode temp1 = list1.head;
         SingleNode temp2 = list2.head;
 
@@ -137,14 +138,19 @@ public class PolynomialSolver{
 
         int[] list1 = array[(int)(poly1 - 'A')].toArray() ;
         int[] list2 = array[(int)(poly2 - 'A')].toArray() ;
-        int[] result = new int[list1.length + list2.length - 1] ;
+        int[] resultarray = new int[list1.length + list2.length - 1] ;
 
         for (int i = 0 ; i < list1.length ; i++) {
             for (int j = 0 ; j < list2.length ; j++) {
-                result[i + j] += list1[i] * list2[j] ;
+                resultarray[i + j] += list1[i] * list2[j] ;
             }
         }
-        return result;
+        array[3] = new SingleLinkedList();
+        SingleLinkedList result = array[3];
+        for(int i = 0 ; i < resultarray.length ; i++) {
+            result.addAtEnd(Integer.valueOf(resultarray[i]));
+        }
+        return resultarray;
     }
 
     public static int[] coeff_array(String str) { // convert input to terms[] array
@@ -178,18 +184,20 @@ public class PolynomialSolver{
                 char c1 = input.nextLine().charAt(0) ;
                 char c2 = input.nextLine().charAt(0) ;
                 add(c1,c2) ;
-                //print_poly(c) ;
+                System.out.println(print_poly('D'));
+               
 
             }else if(operation.compareTo("sub") == 0) {
                 char c1 = input.nextLine().charAt(0) ;
                 char c2 = input.nextLine().charAt(0) ;
                 subtract(c1, c2) ;
-                //print_poly(c2) ;
+                System.out.println(print_poly('D'));
 
             }else if(operation.compareTo("mult") == 0) {
                 char c1 = input.nextLine().charAt(0) ;
                 char c2 = input.nextLine().charAt(0) ;
                 multiply(c1,c2) ;
+                System.out.println(print_poly('D'));
 
             }else if(operation.compareTo("clear") == 0) {
                 clearPolynomial(input.nextLine().charAt(0)) ;
