@@ -1,11 +1,11 @@
-package Labs.Lab4.Part1;
+
 
 
 
 public class SingleNode {
     static private int numberOfNodes = 0;
-    private Object value;
-    private SingleNode next;
+    public Object value;
+    public SingleNode next;
 
     // -------------------------------Constructors---------------------------------
     public SingleNode(Object value) {
