@@ -1,5 +1,5 @@
-import java.util.* ;
-import Labs.Lab4.* ;
+import Labs.* ;
+import java.util.*;
 
 public class PolynomialSolver{
     
@@ -19,7 +19,7 @@ public class PolynomialSolver{
         // input ----> -24 , 26 , -9 , 1
         // 0 , 1 , 0 , 2 , 10
         SingleLinkedList list = array[(int)(poly - 'A')] ;
-        if(list.isEmpty()) { return "" ;}
+        
 
         String str = new String() ;
         SingleNode temp = list.head ;
@@ -51,20 +51,17 @@ public class PolynomialSolver{
             }
             temp = temp.next;
         }
-        
         if(!non_zero) {
-            return "" ;
+            return "[]" ;
         }
+        str = str.replaceAll("x\\^0", "") ;
         str = str.replaceAll("\\+1x", "+x") ;
-        str = str.replaceAll("\\-1x", "-x") ;
+        //str = str.replaceAll("\\-1x", "-x") ;
         // handle first element
         if(str.charAt(0) == '+') {
             str = str.replaceFirst("\\+" , "") ;
         }
-
-        str = str.replaceAll("x\\^0", "") ;
-
-        
+              
         return str ;
     }
     
@@ -161,12 +158,21 @@ public class PolynomialSolver{
         //System.out.println(Arrays.toString(resultarray)) ;
         return resultarray;
     }
+    public static void isNotValid(char poly1, char poly2 )
+    {
+        if(poly1 - 'A' > 2 || poly2 - 'A' > 2 || poly1 - 'A' < 0 || poly2 - 'A' < 0)
+        {
+            System.out.println("Error") ;
+            System.exit(0) ;
+         }
+        
+      }
 
     public static int[] coeff_array(String str) {  // convert input to terms[] array
         
         if(str.compareTo("") == 0) {
-            int[] coeff = {} ;
-            return coeff ;
+            System.out.println("Error") ;
+            System.exit(0) ;
         }
         
         String[] str_array = str.split(",") ;
@@ -187,7 +193,7 @@ public class PolynomialSolver{
         boolean[] flags = {false , false , false} ;
         
         
-        while(true) {
+       while(true) {
             
             if(!input.hasNextLine()) {
                 break ;
@@ -197,6 +203,8 @@ public class PolynomialSolver{
 
             if(operation.compareTo("set") == 0) {
                 char c = input.nextLine().charAt(0) ;
+                if(c == 'R') {c = 'D';}
+                isNotValid(c, 'A');
                 flags[(int)(c - 'A')] = true ;
                 
                 int[] terms = coeff_array(input.nextLine().replaceAll("\\[|\\]", "")) ;
@@ -204,7 +212,8 @@ public class PolynomialSolver{
 
             }else if(operation.compareTo("print") == 0) {
                 char c = input.nextLine().charAt(0) ;
-                
+                if(c == 'R') {c = 'D';}
+                isNotValid(c, 'A');
                 if(!flags[(int)(c - 'A')]) {
                     System.out.println("Error") ;
                     System.exit(0) ;
@@ -215,7 +224,10 @@ public class PolynomialSolver{
             }else if(operation.compareTo("add") == 0) {
                 char c1 = input.nextLine().charAt(0) ;
                 char c2 = input.nextLine().charAt(0) ;
+                if(c1 == 'R') {c1 = 'D';}
+                if(c2 == 'R') {c2 = 'D';}
                 
+                isNotValid(c1, c2);
                 if(!(flags[(int)(c1 - 'A')] && flags[(int)(c2 - 'A')])) {
                     System.out.println("Error") ;
                     System.exit(0) ;
@@ -228,6 +240,9 @@ public class PolynomialSolver{
             }else if(operation.compareTo("sub") == 0) {
                 char c1 = input.nextLine().charAt(0) ;
                 char c2 = input.nextLine().charAt(0) ;
+                if(c1 == 'R') {c1 = 'D';}
+                if(c2 == 'R') {c2 = 'D';}
+                isNotValid(c1, c2);
                 
                 if(!(flags[(int)(c1 - 'A')] && flags[(int)(c2 - 'A')])) {
                     System.out.println("Error") ;
@@ -241,11 +256,13 @@ public class PolynomialSolver{
             }else if(operation.compareTo("mult") == 0) {
                 char c1 = input.nextLine().charAt(0) ;
                 char c2 = input.nextLine().charAt(0) ;
-                
+                if(c1 == 'R') {c1 = 'D';}
+                if(c2 == 'R') {c2 = 'D';}
+                isNotValid(c1, c2);
                 if(!(flags[(int)(c1 - 'A')] && flags[(int)(c2 - 'A')])) {
                     System.out.println("Error") ;
                     System.exit(0) ;
-                }else {
+                } else {
                     multiply(c1,c2) ;
                     System.out.println(print_poly('D'));
                 }
@@ -253,6 +270,8 @@ public class PolynomialSolver{
 
             }else if(operation.compareTo("clear") == 0) {
                 char c = input.nextLine().charAt(0) ;
+                if(c == 'R') {c = 'D';}
+                isNotValid(c, 'A');
                 clearPolynomial(c) ;
                 flags[(int)(c - 'A')] = false ;
                 System.out.println("[]") ;
@@ -261,15 +280,24 @@ public class PolynomialSolver{
 
             }else if(operation.compareTo("eval") == 0) {
                 char c = input.nextLine().charAt(0) ;
-                
+                if(c == 'R') {c = 'D';}
+                isNotValid(c, 'A');
                 if(!flags[(int)(c - 'A')]) {
                     System.out.println("Error") ;
                     System.exit(0) ;
                     
                 }else{
-                    System.out.println(evaluatePolynomial(c, input.nextInt())) ;
+                         System.out.println(evaluatePolynomial(c, input.nextInt())) ;
+
+                   
                 }
                 break ;
+            }
+            else
+            {
+                System.out.println("Error") ;
+                System.exit(0) ;
+                
             }
         }
         //input.close() ;
