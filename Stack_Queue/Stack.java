@@ -1,73 +1,88 @@
 package Stack_Queue ;
+class node<T> {
+   T data;
+   node<T> next;
 
-class node {
-   int value ;
-   node next ;
-
-   public node (int v , node n) {
-      this.value = v ;
-      this.next = n ;
+   public node(T data, node<T> next) {
+       this.data = data;
+       this.next = next;
    }
+   public node(T data) {
+    this.data = data;
+    this.next = null;
+}
 }
 
-public class Stack implements MyStack {
-   node top ;
+public class Stack<T> /*implements IStack<T>*/ { // make the Istack interface as in the Lab
+   private node<T> top;
 
-   public boolean isempty() {
-      return (top == null) ;
+   public boolean isEmpty() {
+       return (top == null);
    }
 
-   public void push(node n) {
-      n.next = top ;
-      top = n ;
+   public void push(node<T> node) {
+       node.next = top;
+       top = node;
    }
 
-   public node pop() {
-
-      if(isempty()) {return null ;} // underflow error
-
-      node temp = top ;
-      top = top.next ;
-      return temp ;
+   public node<T> pop() {
+       if (isEmpty()) {
+           return null; // underflow error
+       }
+       node<T> temp = top;
+       top = top.next;
+       return temp;
    }
 
-   public node Top() {
-      return top ;
+   public node<T> peek() {
+       return top;
    }
 
    public void clear() {
-      top = null ;
+       top = null;
+   }
+
+   public int size() {
+       node<T> temp = peek();
+       int s = 0;
+       while (temp != null) {
+           s++;
+           temp = temp.next;
+       }
+       return s;
    }
 
    public void print_stack() {
-      node temp = top ;
+      node<T> temp = top ;
       System.out.println(" ------ ");
       while(temp != null) {
-         System.out.println("|  " + temp.value + "  |") ;
+         System.out.println("|  " + temp.data + "  |") ;
          temp = temp.next ;
       }
       System.out.println(" ------ ");
    }
 
    public static void main(String[] args) {
-      Stack s1 = new Stack() ;
-      s1.push(new node(15, null)) ;
+      Stack<Character> s1 = new Stack<>() ;
+      s1.push(new node<Character>('o', null)) ;
       s1.print_stack();
 
-      s1.push(new node(20, null)) ;
+      s1.push(new node<Character>('o', null)) ;
       s1.print_stack() ;
 
-      s1.push(new node(50, null)) ;
+      s1.push(new node<Character>('o', null)) ;
       s1.print_stack() ;
 
       s1.pop() ;
       s1.print_stack() ;
 
-      s1.push(new node(90, null)) ;
+      s1.push(new node<Character>('o', null)) ;
       s1.print_stack() ;
 
-      System.out.println("Top = " + s1.Top().value) ;
+      System.out.println("Top = " + s1.peek().data) ;
       s1.pop() ;
       s1.print_stack() ;
    }
+
 }
+
