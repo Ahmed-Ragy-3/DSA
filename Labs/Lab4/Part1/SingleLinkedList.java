@@ -1,8 +1,7 @@
+package Labs.Lab4.Part1;
 
 
 import java.util.Scanner;
-
-import Labs.Lab4.Part1.ILinkedList;
 
 public class SingleLinkedList implements ILinkedList {
 

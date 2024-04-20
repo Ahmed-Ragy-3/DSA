@@ -1,4 +1,8 @@
+package Labs.Lab4.Part2;
 import Labs.* ;
+import Labs.Lab4.Part1.SingleLinkedList;
+import Labs.Lab4.Part1.SingleNode;
+
 import java.util.*;
 
 public class PolynomialSolver{
