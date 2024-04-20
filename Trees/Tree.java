@@ -1,20 +1,19 @@
 package Trees;
+
 import java.util.LinkedList;
 
 public class Tree {
     int value;
     Tree parent;
-    LinkedList<Tree> children;
+    LinkedList<Tree> children = new LinkedList<>();
 
     public Tree(int value) {
         this.value = value;
-        this.children = new LinkedList<>();
     }
 
     public Tree(int value, Tree parent) {
         this.value = value;
         this.parent = parent;
-        this.children = new LinkedList<>();
     }
 
     public void addchild(int[] children) {
@@ -63,5 +62,6 @@ public class Tree {
         root.postOrder();
         System.out.println(); 
         System.out.println("size: " + root.size());
+        System.out.println(root.children.get(1).children.get(0).parent.value);
     }
 }

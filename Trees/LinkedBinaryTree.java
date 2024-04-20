@@ -327,7 +327,8 @@ public class LinkedBinaryTree {
     }
 
     private int max(LinkedTreeNode node) {
-        return Math.max(node.getElement(), Math.max((node.hasLeft() ? this.max(node.getLeft()) : Integer.MIN_VALUE), (node.hasRight() ? this.max(node.getRight()) : Integer.MIN_VALUE)));
+        return Math.max(node.getElement(), Math.max((node.hasLeft() ? this.max(node.getLeft()) : Integer.MIN_VALUE),
+                (node.hasRight() ? this.max(node.getRight()) : Integer.MIN_VALUE)));
     }
 
     public boolean binarySearch(int value) {
@@ -337,7 +338,8 @@ public class LinkedBinaryTree {
     private boolean binarySearch(LinkedTreeNode node, int value) {
         if (node == null)
             return false;
-        return (node.getElement() == value) || (node.getElement() > value ? binarySearch(node.getLeft(), value) : binarySearch(node.getRight(), value));
+        return (node.getElement() == value) || (node.getElement() > value ? binarySearch(node.getLeft(), value)
+                : binarySearch(node.getRight(), value));
     }
 
     public boolean isSorted() {
@@ -347,69 +349,59 @@ public class LinkedBinaryTree {
     private boolean isSorted(LinkedTreeNode node) {
         if (node == null)
             return true;
-        return (node.hasLeft() ? (node.getElement() > node.getLeft().getElement()) && isSorted(node.getLeft()) : true)&& (node.hasRight() ? (node.getElement() <= node.getRight().getElement()) && isSorted(node.getRight()) : true);
+        return (node.hasLeft() ? (node.getElement() > node.getLeft().getElement()) && isSorted(node.getLeft()) : true)
+                && (node.hasRight() ? (node.getElement() <= node.getRight().getElement()) && isSorted(node.getRight())
+                        : true);
     }
 
-
-    public void delete(int value)
-    {
+    public void delete(int value) {
         root = delete(root, value);
     }
-    private LinkedTreeNode delete(LinkedTreeNode node, int value)
-    {
-        if(node == null) return null;
-        if(node.getElement() == value)
-        {
-            if(!node.hasLeft() )
-            {
+
+    private LinkedTreeNode delete(LinkedTreeNode node, int value) {
+        if (node == null)
+            return null;
+        if (node.getElement() == value) {
+            if (!node.hasLeft()) {
                 return node.getRight();
-            }
-            else if(!node.hasRight())
-            {
+            } else if (!node.hasRight()) {
                 return node.getLeft();
-            }
-            else if(node.isLeaf()){
+            } else if (node.isLeaf()) {
                 return null;
-            }
-            else{
+            } else {
                 node.setElement(min(node.getRight()));
                 deletemin(node.getRight());
             }
-        }
-        else if(node.getElement() > value){
+        } else if (node.getElement() > value) {
             node.setLeft(delete(node.getLeft(), value));
-        }
-        else{
+        } else {
             node.setRight(delete(node.getRight(), value));
         }
         return node;
     }
 
-    public void deletemin()
-    {
-        if(!root.hasLeft())
-        {
+    public void deletemin() {
+        if (!root.hasLeft()) {
             root = root.getRight();
-        }
-        else{
+        } else {
             deletemin(root);
         }
     }
+
     private void deletemin(LinkedTreeNode node) {
-        if(node == null) return;
-        if(node.hasLeft() && !node.getLeft().hasLeft())
-        {
-            if(!node.getLeft().hasRight()){
+        if (node == null)
+            return;
+        if (node.hasLeft() && !node.getLeft().hasLeft()) {
+            if (!node.getLeft().hasRight()) {
                 node.setLeft(null);
-            }
-            else{
+            } else {
                 node.setLeft(node.getLeft().getRight());
             }
-        }
-        else{
+        } else {
             deletemin(node.getLeft());
         }
     }
+
     public void visualize() {
         Integer[] array = this.toArray();
         int height = this.height();
@@ -497,8 +489,36 @@ public class LinkedBinaryTree {
         return array;
     }
 
+    public void treeToBinaryTree(Tree originalTree) {
+        this.clear();
+        if (originalTree == null)
+            return;
 
-    int subTreeAt(LinkedTreeNode node, int index){
+        this.root = new LinkedTreeNode(originalTree.value);
+
+        treeToBinaryTree(originalTree, this.root);
+    }
+
+    private void treeToBinaryTree(Tree originalTree, LinkedTreeNode node) {
+        if (originalTree == null)
+            return;
+
+        for (int i = 0; i < originalTree.children.size(); i++) {
+            if (i == 0) {
+                node.setLeft(new LinkedTreeNode(originalTree.children.get(i).value));
+                treeToBinaryTree(originalTree.children.get(i), node.getLeft());
+            } else {
+                LinkedTreeNode current = node.getLeft();
+                while (current.getRight() != null) {
+                    current = current.getRight();
+                }
+                current.setRight(new LinkedTreeNode(originalTree.children.get(i).value));
+                treeToBinaryTree(originalTree.children.get(i), current.getRight());
+            }
+        }
+    }
+
+    int subTreeAt(LinkedTreeNode node, int index) {
         return 0;
     }
 
@@ -518,24 +538,24 @@ public class LinkedBinaryTree {
         temp.getLeft().getRight().setRight(new LinkedTreeNode(1));
         temp.getLeft().getRight().getRight().setRight(new LinkedTreeNode(2));
 
-    //                 1
-    //         /               \
-    //         6               3
-    //     /       \       /       \
-    //     1       8       5       7       
-    //   /       /   \           /
-    //   0       4   1           9
-    //                \
-    //                2
+        // 1
+        // / \
+        // 6 3
+        // / \ / \
+        // 1 8 5 7
+        // / / \ /
+        // 0 4 1 9
+        // \
+        // 2
 
         LinkedBinaryTree treeSorted = new LinkedBinaryTree(new int[] { 5, 3, 7, 4, 6, 8, 9, 7, 2, 1 });
-    //         5
-    //     /       \
-    //     3       7
-    //   /   \   /   \
-    //   2   4   6   8
-    //  /           / \
-    //  1           7 9
+        // 5
+        // / \
+        // 3 7
+        // / \ / \
+        // 2 4 6 8
+        // / / \
+        // 1 7 9
 
         tree.postOrder();
         tree.inOrder();
@@ -570,5 +590,19 @@ public class LinkedBinaryTree {
         System.out.println("Height: " + tree.height());
         tree.inOrder();
         tree.visualize();
+
+        Tree root = new Tree(1);
+        root.addchild(new int[] { 2, 3, 4 });
+        root.children.get(0).addchild(new int[] { 0, 12 });
+        root.children.get(1).addchild(new int[] { 5, 6 });
+        root.children.get(1).children.get(0).addchild(new int[] { 8, 9 });
+        root.children.get(1).children.get(1).addchild(new int[] { 10 });
+        root.children.get(2).addchild(7);
+
+        LinkedBinaryTree tree2 = new LinkedBinaryTree();
+        tree2.treeToBinaryTree(root);
+        tree2.visualize();
+        tree2.print();
+
     }
 }
