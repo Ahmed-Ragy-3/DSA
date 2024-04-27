@@ -522,6 +522,88 @@ public class LinkedBinaryTree {
         return 0;
     }
 
+    //Question 8
+    public int internalNodes() {
+        if(root.isLeaf())
+        {
+            return 0;
+        }
+        return internalNodes(this.root);
+    }
+    private int internalNodes(LinkedTreeNode node) {
+        int sum;
+        if(node.isLeaf())
+        {
+            sum = 0;
+        }
+        else sum = 1;
+        return sum + (node.hasLeft() ?  internalNodes(node.getLeft()) : 0) + (node.hasRight() ?  internalNodes(node.getRight()) : 0);
+    }
+
+    public int leafNodes() {
+        if(root.isLeaf())
+        {
+            return 0;
+        }
+        return leafNodes(this.root);
+    }
+    
+
+    private int leafNodes(LinkedTreeNode node) {
+        int sum;
+        if(node.isLeaf())
+        {
+            sum = 1;
+        }
+        else sum = 0;
+        return sum + (node.hasLeft() ?  leafNodes(node.getLeft()) : 0) + (node.hasRight() ?  leafNodes(node.getRight()) : 0);
+    }
+
+
+    //Question 9
+    public boolean isEquivalent(LinkedBinaryTree tree) { 
+        return isEquivalent(this.root, tree.root);
+    }
+
+    private boolean isEquivalent(LinkedTreeNode node1, LinkedTreeNode node2) {
+        
+        if(node1 != null && node2 == null || node1 != null && node2 == null)
+        {
+            return false;
+        }
+        if(node1 == null && node2 == null)
+        {
+            return true;
+        }
+        if(node1.getElement() == node2.getElement())
+        {
+            return isEquivalent(node1.getLeft(), node2.getLeft()) && isEquivalent(node1.getRight(), node2.getRight());
+        }
+        else{
+            return false;
+        }
+    }
+
+    //Question 10
+    public void swap()
+    {
+        swap(this.root);
+    }
+    private void swap(LinkedTreeNode node)
+    {
+        LinkedTreeNode temp = node.getLeft();
+        node.setLeft(node.getRight());
+        node.setRight(temp);
+        if(node.hasLeft())
+        {
+            swap(node.getLeft());
+        }
+        if(node.hasRight())
+        {
+            swap(node.getRight());
+        }   
+    }
+
     public static void main(String[] args) {
         LinkedBinaryTree tree = new LinkedBinaryTree(1);
 
@@ -603,6 +685,45 @@ public class LinkedBinaryTree {
         tree2.treeToBinaryTree(root);
         tree2.visualize();
         tree2.print();
+        System.out.println("Internal Nodes of tree is " + tree.internalNodes());
+        System.out.println("Internal Nodes of treeSorted is " + treeSorted.internalNodes());
+        System.out.println("Internal Nodes of tree2 is " + tree2.internalNodes());
+        System.out.println("Leaf Nodes of tree is " + tree.leafNodes());
+        System.out.println("Leaf Nodes of treeSorted is " + treeSorted.leafNodes());
+        System.out.println("Leaf Nodes of tree2 is " + tree2.leafNodes());
 
+
+
+
+        treeSorted.swap();
+        treeSorted.visualize();
+        System.out.println("Internal Nodes of tree2 is " + treeSorted.internalNodes());
+        System.out.println("Leaf Nodes of tree2 is " + treeSorted.leafNodes());
+        System.out.println("Height: " + treeSorted.height());
+        System.out.println("isFull: " + treeSorted.isFull());
+        System.out.println("isBalanced: " + treeSorted.isBalanced());
+        System.out.println("Sum: " + treeSorted.sum());
+        System.out.println("Min: " + treeSorted.min());
+        System.out.println("Max: " + treeSorted.max());
+        System.out.println("size: " + treeSorted.size());
+        System.out.println(Arrays.toString(treeSorted.toArray()));
+
+
+        System.out.println(tree.isEquivalent(tree2));
+        System.out.println(treeSorted.isEquivalent(tree2));
+        System.out.println(tree.isEquivalent(treeSorted));
+        System.out.println(tree2.isEquivalent(treeSorted));
+        System.out.println(tree2.isEquivalent(tree));
+        System.out.println(treeSorted.isEquivalent(tree));
+        System.out.println(tree.isEquivalent(treeSorted));
+        System.out.println(treeSorted.isEquivalent(tree));
+        System.out.println(tree.isEquivalent(tree2));
+        System.out.println(tree2.isEquivalent(tree));
+        System.out.println(treeSorted.isEquivalent(tree2));
+        System.out.println(tree2.isEquivalent(treeSorted));
+
+        System.out.println(tree.isEquivalent(tree));
+        System.out.println(treeSorted.isEquivalent(treeSorted));
+        System.out.println(tree2.isEquivalent(tree2));
     }
 }
