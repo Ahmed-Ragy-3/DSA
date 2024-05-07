@@ -1,6 +1,5 @@
 package Stack_Queue;
 
-
 class SingleNode<T> {
     static private int numberOfNodes = 0;
     private Object value;
