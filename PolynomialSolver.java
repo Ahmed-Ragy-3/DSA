@@ -1,4 +1,4 @@
-import Labs.* ;
+//import Labs.* ;
 import java.util.*;
 
 public class PolynomialSolver{
@@ -300,7 +300,7 @@ public class PolynomialSolver{
                 
             }
         }
-        //input.close() ;
+        input.close() ;
     
     }
 }
