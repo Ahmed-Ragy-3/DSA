@@ -1,7 +1,11 @@
 package Stack_Queue;
-import java.util.Arrays;
 
-public class ArrayQueue<T> implements MyQueue<T> {
+import java.util.Arrays;
+import java.util.Scanner;
+
+
+
+public class ArrayQueue<T>  {
     private int size = 0;
     private int capacity = 20;
     private int front = 0;
@@ -19,17 +23,14 @@ public class ArrayQueue<T> implements MyQueue<T> {
         queue = (T[]) new Object[capacity];
     }
     
-    @Override
     public int size() {
         return size;
     }
 
-    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override
     public void enqueue(T value) {
         if(this.isFull())
         {
@@ -40,7 +41,6 @@ public class ArrayQueue<T> implements MyQueue<T> {
         size++;
     }
 
-    @Override
     public T dequeue() {
         if(this.isEmpty())
         {
@@ -53,7 +53,6 @@ public class ArrayQueue<T> implements MyQueue<T> {
         return temp;
     }
 
-    @Override
     public T peek() {
         if(isEmpty())
         {
@@ -62,19 +61,62 @@ public class ArrayQueue<T> implements MyQueue<T> {
         return queue[front];
     }
 
-    @Override
     public void display() {
-        System.out.println(Arrays.deepToString(queue));
+        
+        if(isEmpty()) {
+            System.out.println("[]");
+            return;
+        }
+        System.out.print("[");
+        for (int i = rear-1; i > front; i--) {
+            System.out.print(queue[i] + ", ");
+        }
+        System.out.print(queue[front] + "]");
+
     }
 
-    @Override
     public void clear() {
         rear = front;
     }
 
-    @Override
     public boolean isFull() {
         if(size == capacity) return true;
         return false;
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        String cleanInput = input.nextLine();
+        ArrayQueue<Integer> queue = new ArrayQueue<>();
+        if (cleanInput.compareTo("[]") != 0) {
+            cleanInput = cleanInput.replaceAll("\\[|\\]|\\s", "");
+            String[] elements = cleanInput.split(",");
+            for (int i = elements.length-1; i >=0 ; i--) {
+                queue.enqueue(Integer.parseInt(elements[i]));
+            }
+        }
+
+        String operation = input.next();
+
+        if (operation.compareTo("enqueue") == 0) {
+            queue.enqueue(input.nextInt());
+            queue.display();
+        } else if (operation.compareTo("dequeue") == 0) {
+            if (queue.isEmpty()) {
+                System.out.println("Error");
+            } else {
+                queue.dequeue();
+                queue.display();
+            }
+        } else if (operation.compareTo("isEmpty") == 0) {
+            if (queue.isEmpty()) {
+                System.out.println("True");
+            } else {
+                System.out.println("False");
+            }
+        } else if (operation.compareTo("size") == 0) {
+            System.out.println(queue.size());
+        }
+        input.close();
     }
 }
