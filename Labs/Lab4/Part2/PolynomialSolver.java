@@ -1,12 +1,8 @@
-<<<<<<< HEAD:PolynomialSolver.java
-//import Labs.* ;
-=======
 package Labs.Lab4.Part2;
-import Labs.* ;
+//import Labs.* ;
 import Labs.Lab4.Part1.SingleLinkedList;
 import Labs.Lab4.Part1.SingleNode;
 
->>>>>>> 84525331b00174afb2f98b3f9d47666ae64a1f16:Labs/Lab4/Part2/PolynomialSolver.java
 import java.util.*;
 
 public class PolynomialSolver{

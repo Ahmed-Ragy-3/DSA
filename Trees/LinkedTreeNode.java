@@ -1,6 +1,6 @@
 package Trees;
 
-public class LinkedTreeNode{
+public class LinkedTreeNode {
     private int element;
     private LinkedTreeNode left;
     private LinkedTreeNode right;

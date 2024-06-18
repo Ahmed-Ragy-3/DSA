@@ -1,18 +1,20 @@
 package HashMaps;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-class Node<V,T> {
+class Node<V, T> {
     int key;
     T value;
+
     Node(int key, T value) {
         this.key = key;
         this.value = value;
     }
 }
 
-public class Hashmap<V,T> { // key (Integer) -> Value (T) // hashmap by (((((seperate chaining)))))
-    private LinkedList<Node<V,T>>[] array;
+public class Hashmap<V, T> { // key (Integer) -> Value (T) // hashmap by (((((seperate chaining)))))
+    private LinkedList<Node<V, T>>[] array;
     private ArrayList<Integer> keySet;
     private int filledBuckets = 0;
     private int size = 11;
@@ -20,10 +22,9 @@ public class Hashmap<V,T> { // key (Integer) -> Value (T) // hashmap by (((((sep
 
     @SuppressWarnings("unchecked")
     public Hashmap() {
-        array = (LinkedList<Node<V,T>>[])new LinkedList[size];
-        for(int i = 0; i < array.length; i++)
-        {
-            array[i] = new LinkedList<Node<V,T>>();
+        array = (LinkedList<Node<V, T>>[]) new LinkedList[size];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = new LinkedList<Node<V, T>>();
         }
         keySet = new ArrayList<Integer>();
     }
@@ -31,22 +32,22 @@ public class Hashmap<V,T> { // key (Integer) -> Value (T) // hashmap by (((((sep
     @SuppressWarnings("unchecked")
     public Hashmap(int size) {
         this.size = size;
-        array = (LinkedList<Node<V,T>>[]) new LinkedList[size];;
-        for(int i = 0; i < array.length; i++)
-        {
-            array[i] = new LinkedList<Node<V,T>>();
+        array = (LinkedList<Node<V, T>>[]) new LinkedList[size];
+        
+        for (int i = 0; i < array.length; i++) {
+            array[i] = new LinkedList<Node<V, T>>();
         }
         keySet = new ArrayList<Integer>();
     }
 
     @SuppressWarnings("unchecked")
-    public Hashmap(int size, float threshold){
+    public Hashmap(int size, float threshold) {
         this.size = size;
         this.threshold = threshold;
-        array = (LinkedList<Node<V,T>>[]) new LinkedList[size];;
-        for(int i = 0; i < array.length; i++)
-        {
-            array[i] = new LinkedList<Node<V,T>>();
+        array = (LinkedList<Node<V, T>>[]) new LinkedList[size];
+        
+        for (int i = 0; i < array.length; i++) {
+            array[i] = new LinkedList<Node<V, T>>();
         }
         keySet = new ArrayList<Integer>();
     }
@@ -54,40 +55,34 @@ public class Hashmap<V,T> { // key (Integer) -> Value (T) // hashmap by (((((sep
     public void put(int key, T value) {
         keySet.add(key);
         int index = hashCode(key) % array.length;
-        LinkedList<Node<V,T>> list = array[index];
-        if(!hasKey(key)){
-            for(int i = 0; i < list.size(); i++)
-            {
-                if(list.get(i).key == key){
+        LinkedList<Node<V, T>> list = array[index];
+        if (!hasKey(key)) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).key == key) {
                     list.get(i).value = value;
                     break;
                 }
             }
-        }
-        else{
-            if(array[index].isEmpty())
-            {
+        } else {
+            if (array[index].isEmpty()) {
                 filledBuckets++;
             }
-            array[index].add(new Node<V,T>(key, value));
-            if(loadFactor() > threshold)
-            {
+            array[index].add(new Node<V, T>(key, value));
+            if (loadFactor() > threshold) {
                 this.rebuild();
             }
         }
     }
 
     public T get(int key) {
-        if(!hasKey(key))
-        {
+        if (!hasKey(key)) {
             throw new IllegalStateException("No such key: " + key);
         }
         int index = hashCode(key) % array.length;
-        LinkedList<Node<V,T>> list = array[index];
+        LinkedList<Node<V, T>> list = array[index];
         T value = null;
-        for(int i = 0; i < list.size(); i++)
-        {
-            if(list.get(i).key == key){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).key == key) {
                 value = list.get(i).value;
                 break;
             }
@@ -96,23 +91,20 @@ public class Hashmap<V,T> { // key (Integer) -> Value (T) // hashmap by (((((sep
     }
 
     public void remove(int key) {
-        if(!hasKey(key))
-        {
+        if (!hasKey(key)) {
             throw new IllegalStateException("No such key: " + key);
         }
         keySet.remove(key);
         int index = hashCode(key) % size;
-       
-        LinkedList<Node<V,T>> list = array[index];
-        for(int i = 0; i < list.size(); i++)
-        {
-            if(list.get(i).key == key){
+
+        LinkedList<Node<V, T>> list = array[index];
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).key == key) {
                 list.remove(i);
                 break;
             }
         }
-        if(list.isEmpty())
-        {
+        if (list.isEmpty()) {
             filledBuckets--;
         }
     }
@@ -122,8 +114,7 @@ public class Hashmap<V,T> { // key (Integer) -> Value (T) // hashmap by (((((sep
     }
 
     public boolean hasKey(int key) {
-        if(!keySet.contains(key))
-        {
+        if (!keySet.contains(key)) {
             return false;
         }
         return true;
@@ -133,16 +124,13 @@ public class Hashmap<V,T> { // key (Integer) -> Value (T) // hashmap by (((((sep
         return Math.abs(key);
     }
 
-    public float loadFactor()
-    {
-        return filledBuckets / (float)size;
-    } 
+    public float loadFactor() {
+        return filledBuckets / (float) size;
+    }
 
-
-    private void rebuild(){
-        Hashmap<V,T> temp = new Hashmap<V,T>(this.size*2);
-        for(int i = 0; i < this.keySet.size(); i++)
-        {
+    private void rebuild() {
+        Hashmap<V, T> temp = new Hashmap<V, T>(this.size * 2);
+        for (int i = 0; i < this.keySet.size(); i++) {
             temp.put(this.keySet.get(i), this.get(this.keySet.get(i)));
         }
         this.array = temp.array;
@@ -150,7 +138,6 @@ public class Hashmap<V,T> { // key (Integer) -> Value (T) // hashmap by (((((sep
         this.size = temp.size;
         this.filledBuckets = temp.filledBuckets;
     }
-
 
     public static void main(String[] args) {
         Hashmap<Integer, String> map = new Hashmap<Integer, String>();
