@@ -90,4 +90,9 @@ public interface Trie_interface {
     * @return whether trie is empty or not
     */
    boolean isEmpty() ;
+
+   /**
+    * print trie by level order
+    */
+   void printLevels();
 }

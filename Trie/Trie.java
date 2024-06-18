@@ -89,7 +89,11 @@ public class Trie /*implements Trie_interface*/ {
    }
 
    public void delete(String word) {
-
+      // Case 1 : do - done            (delete do)   ---> set wordEnd to false
+      // Case 2 : do - done            (delete done) ---> remove hashmap of letter (o)
+      // Case 2 : do - done - door     (delete done) ---> remove key (n) in the hashmap of letter(o) 
+      // Case 4 : ahmed                (delete ahmed) --> remove (a) in first hashmap
+      // Case 5 : bear - bean          (delete bean) ---> remove key (n) in the hashmap of letter(a) 
    }
 
    // private void delete() {
@@ -120,12 +124,12 @@ public class Trie /*implements Trie_interface*/ {
       return both ;
    }
 
-   public List<String> toList() {
+   List<String> toList() {
       return toList(head , new ArrayList<>() , "") ;
    }
 
-   private List<String> toList(TrieNode tempNode , List<String> list , String str) {
-      if(tempNode.wordEnd) 
+   protected List<String> toList(TrieNode tempNode , List<String> list , String str) {
+      if(tempNode.wordEnd)
          list.add(str) ;
 
       for(char c : tempNode.letters.keySet()) {
@@ -149,19 +153,37 @@ public class Trie /*implements Trie_interface*/ {
       return list ;
    }
 
-   private void print(List<String> words) {
+   public int countWordsWithPrefix(String prefix) {
+      TrieNode tempNode = head ;
+      for(char c : prefix.toCharArray()) {
+         if(!tempNode.letters.containsKey(c)) return 0 ;
+         tempNode = tempNode.letters.get(c) ;
+      }
+      return countWordsWithPrefix(tempNode , 0) ;
+   }
+
+   protected int countWordsWithPrefix(TrieNode tempNode , int count) {
+      if(tempNode.wordEnd) count++ ;
+
+      for(char c : tempNode.letters.keySet()) {
+         count = countWordsWithPrefix(tempNode.letters.get(c) , count) ;
+      }
+      return count ;
+   }
+
+   protected void print(List<String> words) {
       for(String word : words) {
          System.out.println(word);
       }
    }
    
-   public void printTrieWords() {
+   void printTrieWords() {
       System.out.println("\n-------------- All words -------------") ;
       print(this.toList()) ;
       System.out.println("--------------------------------------") ;
    }
 
-   public void printWordsWithPrefix(String prefix) {
+   void printWordsWithPrefix(String prefix) {
       System.out.print("\n---------------") ;
       System.out.print(" Words with prefix \"" + prefix + "\" ");
       System.out.println("----------------");
@@ -169,25 +191,35 @@ public class Trie /*implements Trie_interface*/ {
       System.out.println("-----------------------------------------------------") ;
    }
 
-   public void printLevels() {
+   void printLevels() {
       // print the letters that is in front of the queue
       // then add all letters of the printed hashmap
       Queue<Map<Character , TrieNode>> queue = new LinkedList<>() ;
       queue.add(head.letters) ;
-      int i = 1 ;
+      int prev_level = 1 ;
+      int current_level = 0 ;
       while (!queue.isEmpty()) {
          for(TrieNode tempNode : queue.peek().values()) {
             queue.add(tempNode.letters) ;
+            current_level++ ;
          }
-         System.out.print(queue.poll().keySet().toString());
+         System.out.print(queue.poll().keySet().toString() + " ") ;
+         if(--prev_level == 0) {
+            prev_level = current_level ;
+            current_level = 0 ;
+            System.out.println();
+         }
+         
       }
    }
 
    public static void main(String[] args) {
-      Trie t1 = new Trie("ahmed" , "ahm" , "a" , "nour" , "test" , "Happy Eid") ;
+      Trie t1 = new Trie("ahmed" , "ahmaa" , "nour" , "test") ;
+      // Trie t1 = new Trie("ahmed" );
       //t1.insert("Today is Monday" , "testing trie" , "trie used in word processing" , "any except 9") ;
-      t1.insert("antibody", "antifreeze", "antithesis", "antonym") ;
-      t1.printLevels();
+      t1.insert("antibody", "antifreeze", "antithesis");
+      //t1.printLevels();
+      System.out.println(t1.countWordsWithPrefix("anti"));
       //System.out.println(t1.largestCommonPrefix("trie used in searching")) ;
 
       // System.out.println(t1.size);

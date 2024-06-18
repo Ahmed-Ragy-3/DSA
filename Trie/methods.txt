@@ -1,17 +1,19 @@
 void insert(String word);
 boolean search(String word);
-boolean startsWith(String prefix);
+boolean containsPrefix(String prefix);
 void delete(String word);
 List<String> getWordsWithPrefix(String prefix);
 int size();
 void clear();
-TrieNode combine(TrieNode head1 , TrieNode head2) ;
-List<String> toList(TrieNode head) ;
-void printTrie(TrieNode head) ;
-boolean isEmpty(TrieNode head) ;
+TrieNode combine(TrieNode head1 , TrieNode head2);
+List<String> toList(TrieNode head);
+void printTrie(TrieNode head);
+boolean isEmpty(TrieNode head);
+List<String> suggest();
+int countWordsWithPrefix(String prefix);
+String largestCommonPrefix(String word);
+void printLevels();
 
 ---- undone ----
 void delete(String word);
 List<String> suggest() ;
-int countWordsWithPrefix(String prefix);
-void printLevels() ;
