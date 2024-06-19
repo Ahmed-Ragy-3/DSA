@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.* ;
 
 public class Trie /*implements Trie_interface*/ { 
    TrieNode head ;
@@ -88,17 +84,46 @@ public class Trie /*implements Trie_interface*/ {
       return true ;
    }
 
-   public void delete(String word) {
-      // Case 1 : do - done            (delete do)   ---> set wordEnd to false
-      // Case 2 : do - done            (delete done) ---> remove hashmap of letter (o)
-      // Case 2 : do - done - door     (delete done) ---> remove key (n) in the hashmap of letter(o) 
-      // Case 4 : ahmed                (delete ahmed) --> remove (a) in first hashmap
-      // Case 5 : bear - bean          (delete bean) ---> remove key (n) in the hashmap of letter(a) 
+   public void delete(String...words) {
+      // Case 1 : deleting a word that doesn't exist in the Trie
+      // Case 2 : ahmed         (delete ahmed) ---> remove (a) in first hashmap
+      // Case 3 : do - done     (delete do)   ----> set wordEnd to false
+      // Case 4 : do - done     (delete done) ----> remove hashmap of letter (o)
+      // Case 5 : bear - bean   (delete bean) ----> remove key (n) in the hashmap of letter(a)
+      for(String word : words) delete(word);
    }
 
-   // private void delete() {
+   private void delete(String word) {
+      if(!search(word)) return ; // Case 1
+      this.size-- ;
+      TrieNode temp = head ;
+      Stack<TrieNode> stack = new Stack<>() ;
+      char[] wordArr = word.toCharArray() ;
 
-   // }
+      for(char c : wordArr) {
+         stack.push(temp.letters.get(c)) ;
+         temp = temp.letters.get(c) ;
+      }
+      if(!stack.peek().letters.isEmpty()) { // Case 3
+         stack.peek().wordEnd = false ;
+         return ;
+      }
+
+      int i = wordArr.length - 1 ;
+      boolean commonChar = false ;
+      while (true) {
+         temp = stack.pop() ; // First iteration ---> temp = last letter (must be removed)
+         if(!commonChar) {
+            if(stack.isEmpty()) break ;
+            stack.peek().letters.remove(wordArr[i]) ;
+         }
+         i-- ;
+         if(stack.isEmpty()) break ;
+         commonChar = !stack.peek().letters.isEmpty() ;
+         
+      }
+      
+   }
 
    String largestCommonPrefix(String word) {
       String lcp = "" ;
@@ -113,15 +138,14 @@ public class Trie /*implements Trie_interface*/ {
       return lcp ;
    }
 
-   public static Trie combine(Trie t1 , Trie t2) {
-      Trie both = new Trie() ;
-      for(String word : t1.toList()) {
-         both.insert(word);
+   public static Trie combine(Trie...t) {
+      Trie combination = new Trie() ;
+      for(int i=0 ; i<t.length ; i++) {
+         for(String word : t[i].toList()) {
+            combination.insert(word);
+         }
       }
-      for(String word : t2.toList()) {
-         both.insert(word);
-      }
-      return both ;
+      return combination ;
    }
 
    List<String> toList() {
@@ -143,6 +167,7 @@ public class Trie /*implements Trie_interface*/ {
       List<String> list = new ArrayList<>() ;
       TrieNode tempNode = head ;
       for(char c : prefix.toCharArray()) {
+         if(!tempNode.letters.containsKey(c)) return new ArrayList<>() ;
          tempNode = tempNode.letters.get(c) ;
       }
       list = toList(tempNode , list , "") ;
@@ -151,6 +176,20 @@ public class Trie /*implements Trie_interface*/ {
          //System.out.println("----> " + str);
       }
       return list ;
+   }
+
+   void suggest(String prefix) {
+      int count = countWordsWithPrefix(prefix) ;
+      if(count == 0) {
+         System.out.println("No suggestions");
+         return ;
+      } else if(count == 1) {
+         System.out.println(count + " suggestion : ");
+      }else {
+         System.out.println(count + " suggestions : ");
+      }
+      
+      System.out.println(getWordsWithPrefix(prefix));
    }
 
    public int countWordsWithPrefix(String prefix) {
@@ -183,13 +222,15 @@ public class Trie /*implements Trie_interface*/ {
       System.out.println("--------------------------------------") ;
    }
 
-   void printWordsWithPrefix(String prefix) {
-      System.out.print("\n---------------") ;
-      System.out.print(" Words with prefix \"" + prefix + "\" ");
-      System.out.println("----------------");
-      print(getWordsWithPrefix(prefix));
-      System.out.println("-----------------------------------------------------") ;
-   }
+
+   /* Same as suggest method */
+   // void printWordsWithPrefix(String prefix) {
+   //    System.out.print("\n---------------") ;
+   //    System.out.print(" Words with prefix \"" + prefix + "\" ");
+   //    System.out.println("----------------");
+   //    print(getWordsWithPrefix(prefix));
+   //    System.out.println("-----------------------------------------------------") ;
+   // }
 
    void printLevels() {
       // print the letters that is in front of the queue
@@ -214,34 +255,50 @@ public class Trie /*implements Trie_interface*/ {
    }
 
    public static void main(String[] args) {
-      Trie t1 = new Trie("ahmed" , "ahmaa" , "nour" , "test") ;
-      // Trie t1 = new Trie("ahmed" );
-      //t1.insert("Today is Monday" , "testing trie" , "trie used in word processing" , "any except 9") ;
+      Scanner input = new Scanner(System.in) ;
+      Trie t1 = new Trie("ahmed" , "bean" , "bear" , "test" , "do" , "door" , "done") ;
       t1.insert("antibody", "antifreeze", "antithesis");
-      //t1.printLevels();
-      System.out.println(t1.countWordsWithPrefix("anti"));
-      //System.out.println(t1.largestCommonPrefix("trie used in searching")) ;
+      t1.printLevels();
 
-      // System.out.println(t1.size);
-      // t1.printWordsWithPrefix("ant") ;
-      // t1.printWordsWithPrefix("anti");
-      // System.out.println(t1.search("ahmggfggrgegege")) ;
-      // System.out.println(t1.search("ghs"));
-      // t1.printWordsWithPrefix("a");
-      // t1.printTrie();
+      Trie t2 = new Trie("IN TRIE 2") ;
+      t2.insert("apple", "banana", "cherry", "date", "elderberry", 
+      "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", 
+      "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli fruit",
+      "vanilla", "watermelon", "xigua", "yellow passion fruit", "zucchini") ;
+
+      Trie t3 = new Trie("IN TRIE 3") ;
+      t3.insert("asparagus", "broccoli", "carrot", "daikon", "eggplant") ;
+      t3.insert( "fennel", "garlic", "horseradish", "iceberg lettuce", "jalapeno", 
+      "kale", "leek", "mushroom", "nutmeg", "oregano", "parsley", "quinoa", "radish", 
+      "spinach", "tomato", "upland cress", "victoria plum", "watercress", "yam") ; 
+
+      Trie compu = new Trie("computer science trie") ;
+      compu.insert("algorithm", "binary", "cache", "data", "encryption",
+      "hardware", "interface", "javascript", "kernel", "logic gate", "machine learning", "network",
+      "object-oriented", "protocol", "query", "recursion", "syntax", "thread", "URL", "variable", "web",
+      "XML", "YAML", "z-buffer", "array", "bit", "compiler", "database", "exception", "function", "GPU",
+      "hashing", "integer", "JSON", "key", "loop", "microprocessor", "node", "operating system", "pointer",
+      "queue", "register", "stack", "token", "Unix", "virtual machine", "WiFi", "XPath", "yield", "zip file",
+      "back-end", "class", "distributed system", "encryption key", "front-end", "garbage collection", "hypervisor",
+      "index", "JVM", "Kubernetes", "lambda function", "metadata", "normalization","OOP", "polymorphism",
+      "relational database", "SQL", "test case", "Unicode", "virtualization", "web socket", "XML schema", "zero-knowledge proof") ;
+
+      compu.delete("XML", "YAML", "z-buffer", "array", "bit", "compiler", "database", "exception");
+
+      System.out.println(compu.search("key")) ;
+      System.out.println(compu.largestCommonPrefix("java"));
       
-      // t1.clear();
-      // t1.printTrie();
+      //t2.printLevels();
+      t2.delete("oihd" , "quince" , "xigua" , "kiwi");
+      t2.printTrieWords();
 
-      // Trie t2 = new Trie("app1" , "app2" , "app3" , "in trie 2") ;
-      // Trie both = combine(t1 , t2) ;
-      // t1.printTrieWords();
-      // t2.printTrieWords();
-      // both.printTrieWords();
+      Trie big = combine(t1 , t2 , t3 , compu) ;
+      //big.printTrieWords();
+      big.suggest("encry");
+      System.out.println(big.countWordsWithPrefix("d")) ;
+      System.out.println(big.size);
 
-      // System.out.println(t2.size);
-      // System.out.println(t2.isEmpty());
-      // t2.printTrie();
+      input.close();
    }
 
 }

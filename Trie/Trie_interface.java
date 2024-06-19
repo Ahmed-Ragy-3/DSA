@@ -22,7 +22,7 @@ public interface Trie_interface {
     * @param prefix the prefix to search for
     * @return true if there is any word in the trie that starts with the prefix, false otherwise
     */
-   boolean startsWith(String prefix);
+   boolean containsPrefix(String prefix);
 
    /**
     * Deletes a word from the trie.
@@ -95,4 +95,9 @@ public interface Trie_interface {
     * print trie by level order
     */
    void printLevels();
+
+   /**
+    * Auto complete given word
+    */
+   void suggest(String prefix);
 }
