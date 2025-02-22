@@ -4,33 +4,33 @@ package Stack_Queue;
 import java.util.Arrays;
 import java.util.Scanner;
 
-class SingleNode {
-    static private int numberOfNodes = 0;
-    private Object value;
-    private SingleNode next;
+class SingleNode<T> {
+    private static int numberOfNodes = 0;
+    private T value;
+    private SingleNode<T> next;
     
     
-    public SingleNode(Object value) {
+    public SingleNode(T value) {
         this.value = value;
         this.next = null;
         numberOfNodes++;
     }
-    public SingleNode(Object value, SingleNode next) {
+    public SingleNode(T value, SingleNode<T> next) {
         this.value = value;
         this.next = next;
         numberOfNodes++;
     }
 
-    public Object getValue() {
+    public T getValue() {
         return value;
     }
-    public void setValue(Object value) {
+    public void setValue(T value) {
         this.value = value;
     }
-    public SingleNode getNext() {
+    public SingleNode<T> getNext() {
         return next;
     }
-    public void setNext(SingleNode next) {
+    public void setNext(SingleNode<T> next) {
         this.next = next;
     }
 
@@ -42,8 +42,8 @@ class SingleNode {
 
 public class LinkedQueue<T> {
     int size;
-    SingleNode front;
-    SingleNode rear;
+    SingleNode<T> front;
+    SingleNode<T> rear;
     
     public LinkedQueue() {
         this.size = 0;
@@ -60,7 +60,7 @@ public class LinkedQueue<T> {
     }
 
     public void enqueue(T value) {
-        SingleNode newNode = new SingleNode(value);
+        SingleNode<T> newNode = new SingleNode<T>(value);
         if(isEmpty()) {
             front = newNode;
             rear = newNode;
@@ -77,14 +77,12 @@ public class LinkedQueue<T> {
         if(isEmpty()) {
             throw new IllegalStateException("Queue is Empty");
         }
-        @SuppressWarnings("unchecked")
         T temp = (T)front.getValue();
         front = front.getNext();
         size--;
         return temp;
     }
 
-    @SuppressWarnings("unchecked")
     public T peek() {
         return (T)this.front.getValue();
     }
@@ -95,7 +93,7 @@ public class LinkedQueue<T> {
 
     public int[] toArray() {
         int[] arr = new int[size];
-        SingleNode temp = front;
+        SingleNode<T> temp = front;
         int i = 0;
         while(temp!= null) {
             arr[i] = (int)temp.getValue();
