@@ -57,23 +57,36 @@ void dijkstra(int start, vector<vector<pair<int, int>>> &graph) {
 }
 
 void bellmanFord(int start, vector<vector<int>> &edges, int n) {
-   vector<int> dist(n, INT_MAX);
-   dist[start] = 0;
+    vector<int> dist(n, INT_MAX);
+    dist[start] = 0;
 
-   for (int i = 0; i < n - 1; i++) {
-      for (auto &edge : edges) {
-         int u = edge[0], v = edge[1], weight = edge[2];
-         if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
-            dist[v] = dist[u] + weight;
-         }
+    for (int i = 0; i < n - 1; i++) {
+        bool anyUpdate = false;
+        for (auto &edge : edges) {
+            int u = edge[0], v = edge[1], weight = edge[2];
+
+            if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+                anyUpdate = true;
+            }
+        }
+        // If no edge was relaxed, stop early
+        if (!anyUpdate) break;
+    }
+   
+    // negative cycle detection
+    for (auto &edge : edges) {
+      int u = edge[0], v = edge[1], weight = edge[2];
+      if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
+         // graph has negative weighted cycle
+         break;
       }
-   }
+    }
 
-   for (int i = 0; i < n; i++) {
-      cout << "Distance to " << i << " is " << dist[i] << endl;
-   }
+    for (int i = 0; i < n; i++) {
+        cout << "Distance to " << i << " is " << dist[i] << endl;
+    }
 }
-
 void floydWarshall(vector<vector<int>> &dist, int n) {
    for (int k = 0; k < n; k++) {
       for (int i = 0; i < n; i++) {
