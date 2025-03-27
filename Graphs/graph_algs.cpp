@@ -40,13 +40,13 @@ void dijkstra(int start, vector<vector<pair<int, int>>> &graph) {
    pq.push({0, start});
 
    while (!pq.empty()) {
-      int u = pq.top().second;
+      int current = pq.top().second;
       pq.pop();
-      for (auto &edge : graph[u]) {
-         int v = edge.first, weight = edge.second;
-         if (dist[u] + weight < dist[v]) {
-            dist[v] = dist[u] + weight;
-            pq.push({dist[v], v});
+      for (auto &edge : graph[current]) {
+         int neighbor = edge.first, weight = edge.second;
+         if (dist[current] + weight < dist[neighbor]) {
+            dist[neighbor] = dist[current] + weight;
+            pq.push({dist[neighbor], neighbor});
          }
       }
    }
