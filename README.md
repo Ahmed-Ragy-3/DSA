@@ -34,3 +34,6 @@ In addition to data structures, the repository features various algorithms, incl
 
 - **Move Puzzle Solver** (`movepuzzle.py`): A Python script that solves move puzzles.
 - **Utility Functions** (`util.py`): A collection of helper functions to support algorithm implementations.
+
+## Algorithms visualization resource
+- https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
