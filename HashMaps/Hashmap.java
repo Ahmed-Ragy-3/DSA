@@ -150,6 +150,7 @@ public class Hashmap<V, T> { // key (Integer) -> Value (T) // hashmap by (((((se
         map.put(6, "t");
         map.put(-7, "e");
         map.put(8, "g");
+        
         System.out.println(map.get(0));
         System.out.println(map.get(1));
         System.out.println(map.get(2));

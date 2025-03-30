@@ -16,7 +16,7 @@ class Number {
 
         numOfElements++;
     }
-    
+
     public void setValue(int value) {
         this.value = value;
     }
@@ -57,7 +57,7 @@ public class SparseArray {
     private int[] rowIndex;
     private ArrayList<Number> values;
 
-    //constructor
+    // constructor
     public SparseArray(int[][] matrix) { // true
         values = new ArrayList<Number>();
         rowIndex = new int[matrix.length];
@@ -66,50 +66,41 @@ public class SparseArray {
 
         boolean isFirst = true;
         boolean isEmpty;
-        for(int i = 0; i < matrix.length; i++)
-        {
+        for (int i = 0; i < matrix.length; i++) {
             isFirst = true;
             isEmpty = true;
-            for(int j = 0; j < matrix[0].length; j++)
-            {
-                if(matrix[i][j] != 0)
-                {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] != 0) {
                     isEmpty = false;
-                    if(isFirst)
-                    {
+                    if (isFirst) {
                         rowIndex[i] = Number.getNumberOfElements();
                         isFirst = false;
                     }
                     values.add(new Number(i, j, matrix[i][j]));
                 }
             }
-            if(isEmpty)
-            {
+            if (isEmpty) {
                 rowIndex[i] = -1;
             }
         }
     }
-    //end constructor
+    // end constructor
 
-    //checkers
-    public boolean isRowEmpty(int xIndex)
-    {
-        if(rowIndex[xIndex] == -1)
-        {
+    // checkers
+    public boolean isRowEmpty(int xIndex) {
+        if (rowIndex[xIndex] == -1) {
             return true;
-        } 
+        }
         return false;
     }
-    //end checkers
+    // end checkers
 
-    //getters
-    public int getNumOfRows()
-    {
+    // getters
+    public int getNumOfRows() {
         return numberOfRows;
     }
-    
-    public int getNumOfCols()
-    {
+
+    public int getNumOfCols() {
         return numberOfCols;
     }
 
@@ -117,40 +108,38 @@ public class SparseArray {
 
         return values;
     }
-    public int getNumOfEmptyRows(){
+
+    public int getNumOfEmptyRows() {
         int numOfEmptyRows = 0;
-        for(int i = 0; i < rowIndex.length; i++)
-        {
-            if(rowIndex[i] == -1)
-            {
+        for (int i = 0; i < rowIndex.length; i++) {
+            if (rowIndex[i] == -1) {
                 numOfEmptyRows++;
             }
         }
         return numOfEmptyRows;
     }
+
     public int[] getRowIndexArray() {
         return rowIndex;
     }
-    //end getters
+    // end getters
 
-    //printing
+    // printing
     public void printRowIndexArray() {
         System.out.println(Arrays.toString(rowIndex));
     }
 
-    public String toString(){
-        String result =  "RowArray: " + Arrays.toString(rowIndex) + "\n";
-        for(int i = 0; i < 24; i++)
-        {
+    public String toString() {
+        String result = "RowArray: " + Arrays.toString(rowIndex) + "\n";
+        for (int i = 0; i < 24; i++) {
             result += "-";
         }
         result += "\n";
-        for(int i = 0; i < values.size(); i++)
-        {
-            result += i + ": " +  "x: " + values.get(i).getXIndex() + ", " + "y: " + values.get(i).getYIndex()+ ", " + "value: " + values.get(i).getValue() + "\n";
+        for (int i = 0; i < values.size(); i++) {
+            result += i + ": " + "x: " + values.get(i).getXIndex() + ", " + "y: " + values.get(i).getYIndex() + ", "
+                    + "value: " + values.get(i).getValue() + "\n";
         }
-        for(int i = 0; i < 24; i++)
-        {
+        for (int i = 0; i < 24; i++) {
             result += "-";
         }
         result += "\n";
@@ -158,10 +147,8 @@ public class SparseArray {
     }
 
     public void printMatrix() {
-        for(int i = 0; i < this.numberOfRows; i++)
-        {
-            for(int j = 0; j < this.numberOfCols; j++)
-            {
+        for (int i = 0; i < this.numberOfRows; i++) {
+            for (int j = 0; j < this.numberOfCols; j++) {
                 System.out.print(this.getValue(i, j) + "\t");
             }
             System.out.println();
@@ -181,177 +168,143 @@ public class SparseArray {
         printLine(50);
     }
 
-    private void printLine(int length)
-    {
-        for(int i = 0; i < length; i++)
-        {
+    private void printLine(int length) {
+        for (int i = 0; i < length; i++) {
             System.out.print("-");
         }
         System.out.println();
     }
 
     public void printValuesArray() {
-        for(int i = 0; i < values.size(); i++)
-        {
-            System.out.print(i + ": " +  "x: " + values.get(i).getXIndex() + ", " + "y: " + values.get(i).getYIndex()+ ", " + "value: " + values.get(i).getValue());
+        for (int i = 0; i < values.size(); i++) {
+            System.out.print(i + ": " + "x: " + values.get(i).getXIndex() + ", " + "y: " + values.get(i).getYIndex()
+                    + ", " + "value: " + values.get(i).getValue());
             System.out.println();
         }
     }
-    //end printing
+    // end printing
 
-    //setting 
-    public void setValue(int xIndex, int yIndex, int value) { //true
-        if(xIndex >= numberOfRows || xIndex < 0 || yIndex < 0 || yIndex >= numberOfRows)
-        {
+    // setting
+    public void setValue(int xIndex, int yIndex, int value) { // true
+        if (xIndex >= numberOfRows || xIndex < 0 || yIndex < 0 || yIndex >= numberOfRows) {
             throw new IllegalArgumentException("Out of bounds!");
         }
-        //if row is empty (true)
+        // if row is empty (true)
 
-        if(rowIndex[xIndex] == -1)
-        {
-            int index = xIndex ;
-            while(index < rowIndex.length && rowIndex[index] == -1){
+        if (rowIndex[xIndex] == -1) {
+            int index = xIndex;
+            while (index < rowIndex.length && rowIndex[index] == -1) {
                 index++;
             }
-            if(index != rowIndex.length)
-            {
+            if (index != rowIndex.length) {
                 rowIndex[xIndex] = rowIndex[index];
                 values.add(rowIndex[xIndex], new Number(xIndex, yIndex, value));
-                for(int i = index; i < rowIndex.length; i++)
-                {
-                    if(rowIndex[i] != -1)
-                    {
+                for (int i = index; i < rowIndex.length; i++) {
+                    if (rowIndex[i] != -1) {
                         rowIndex[i]++;
                     }
                 }
                 return;
-            }
-            else
-            {
+            } else {
                 rowIndex[xIndex] = Number.getNumberOfElements();
                 values.add(new Number(xIndex, yIndex, value));
                 return;
             }
         }
 
-
         int upperlimit;
         try {
             int index = xIndex + 1;
-            while(index < rowIndex.length && rowIndex[index] == -1){
+            while (index < rowIndex.length && rowIndex[index] == -1) {
                 index++;
             }
             upperlimit = rowIndex[index];
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             upperlimit = values.size();
         }
-        
-        //case if it exists
+
+        // case if it exists
         int newIndex = 0;
-        for(int i = rowIndex[xIndex]; i < upperlimit; i++)
-        {
-            if(values.get(i).getYIndex() == yIndex)
-            {
+        for (int i = rowIndex[xIndex]; i < upperlimit; i++) {
+            if (values.get(i).getYIndex() == yIndex) {
                 values.get(i).setValue(value);
                 return;
-            }
-            else if(values.get(i).getYIndex() < yIndex)
-            {
+            } else if (values.get(i).getYIndex() < yIndex) {
                 newIndex++;
-            }
-            else
-            {
+            } else {
                 break;
             }
         }
 
-        //case if it doesn't exist
+        // case if it doesn't exist
 
         values.add(newIndex + rowIndex[xIndex], new Number(xIndex, yIndex, value));
-        for(int i = xIndex + 1; i < rowIndex.length; i++)
-        {
-            if(rowIndex[i] != -1)
-            {
+        for (int i = xIndex + 1; i < rowIndex.length; i++) {
+            if (rowIndex[i] != -1) {
                 rowIndex[i]++;
             }
         }
     }
-    //end setting
+    // end setting
 
-    //getting
-    public int getValue(int xIndex, int yIndex) { //true
-        if(xIndex >= numberOfRows || xIndex < 0 || yIndex < 0 || yIndex >= numberOfRows)
-        {
+    // getting
+    public int getValue(int xIndex, int yIndex) { // true
+        if (xIndex >= numberOfRows || xIndex < 0 || yIndex < 0 || yIndex >= numberOfRows) {
             throw new IllegalArgumentException("Out of bounds!");
         }
-        if(rowIndex[xIndex] == -1)
-        {
+        if (rowIndex[xIndex] == -1) {
             return 0;
         }
         int upperlimitRowIndex = xIndex;
         int upperlimit;
-        if(xIndex == rowIndex.length - 1)
-        {
+        if (xIndex == rowIndex.length - 1) {
             upperlimit = values.size();
-        }
-        else{
-            while(upperlimitRowIndex < rowIndex.length)
-            {
+        } else {
+            while (upperlimitRowIndex < rowIndex.length) {
                 upperlimitRowIndex++;
-                if(upperlimitRowIndex >= rowIndex.length)
-                {
+                if (upperlimitRowIndex >= rowIndex.length) {
                     break;
                 }
-                if(rowIndex[upperlimitRowIndex] != -1)
-                {
+                if (rowIndex[upperlimitRowIndex] != -1) {
                     break;
                 }
             }
-            if(upperlimitRowIndex == rowIndex.length)
-            {
+            if (upperlimitRowIndex == rowIndex.length) {
                 upperlimit = Number.getNumberOfElements();
-            }
-            else{
+            } else {
                 upperlimit = rowIndex[upperlimitRowIndex];
             }
-            
+
         }
-        
-        for(int i = rowIndex[xIndex]; i < upperlimit; i++)
-        {
-            if(values.get(i).getYIndex() == yIndex)
-            {
+
+        for (int i = rowIndex[xIndex]; i < upperlimit; i++) {
+            if (values.get(i).getYIndex() == yIndex) {
                 return values.get(i).getValue();
             }
         }
 
         return 0;
     }
-    //end getting
-    
-//////////////////////////////////////////////////////////////
-    public static void main(String[] args){
+    // end getting
+
+    //////////////////////////////////////////////////////////////
+    public static void main(String[] args) {
         int[][] matrix = {
-            {0, 0, 0}
-            ,{0, 0, 0}
-            ,{0, 0, 0}
+                { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }
         };
 
-        //assaigning the sparse matrix
+        // assaigning the sparse matrix
         SparseArray sparseArray = new SparseArray(matrix);
 
-        //seting values
+        // seting values
         int counter = 0;
-        for(int i = matrix.length - 1; i >= 0; i--)
-        {
-            for(int j = matrix[i].length -1; j >= 0; j--)
-            {
+        for (int i = matrix.length - 1; i >= 0; i--) {
+            for (int j = matrix[i].length - 1; j >= 0; j--) {
                 sparseArray.setValue(i, j, counter);
                 counter++;
                 sparseArray.printAllContents();
             }
         }
     }
-///////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////
 }

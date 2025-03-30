@@ -2,41 +2,40 @@ import java.util.Arrays;
 
 public class temp {
     public static void main(String[] args) {
-        int[] array = new int[] {12,44,13,88,23,94,11,39,20,16,5};
-        
+        int[] array = new int[] { 12, 44, 13, 88, 23, 94, 11, 39, 20, 16, 5 };
+
         int[] quad = new int[array.length];
-        int[] doubleHashing = new int[array.length]; 
+        int[] doubleHashing = new int[array.length];
         for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]  +": \t" +(2 * array[i] + 5) % 11+ "\t" + 7 * (array[i]  % 7));
+            System.out.println(array[i] + ": \t" + (2 * array[i] + 5) % 11 + "\t" + 7 * (array[i] % 7));
         }
-        //Linear Probing
+        // Linear Probing
         for (int i = 0; i < array.length; i++) {
             int prob = (2 * array[i] + 5) % array.length;
-            while(linear[prob] != null) {
+            while (linear[prob] != null) {
                 prob = (prob + 1) % array.length;
             }
             linear[prob] = array[i];
         }
-        //Quad Probing
+        // Quad Probing
         for (int i = 0; i < array.length; i++) {
             int prob = (2 * array[i] + 5) % array.length;
             int temp = prob;
             int n = 0;
-            while(quad[temp] != 0) {
-                temp = (prob + (int)Math.pow(n, 2)) % array.length;
+            while (quad[temp] != 0) {
+                temp = (prob + (int) Math.pow(n, 2)) % array.length;
                 n++;
-                if(n == 100) {
+                if (n == 100) {
                     break;
                 }
             }
             quad[temp] = array[i];
         }
-        for(int i = 0; i < array.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             int prob = (2 * array[i] + 5) % array.length;
-            int offset = 7 * (array[i]  % 7);
+            int offset = 7 * (array[i] % 7);
 
-            while(doubleHashing[prob] != 0)
-            {
+            while (doubleHashing[prob] != 0) {
                 prob = (prob + offset) % array.length;
             }
             doubleHashing[prob] = array[i];
@@ -50,9 +49,11 @@ public class temp {
     }
 
     static Integer[] linear = new Integer[11];
-    static int hashCode(int key){
+
+    static int hashCode(int key) {
         return (2 * key + 5);
     }
+
     static void delete(int key) {
         int index = hashCode(key) % linear.length;
         int start = index;
@@ -82,5 +83,5 @@ public class temp {
             nextIndex = (nextIndex + 1) % linear.length;
         }
     }
-    
+
 }

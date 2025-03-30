@@ -247,6 +247,7 @@ public class Trie implements ITrie {
             queue.add(tempNode.letters);
             current_level++;
          }
+
          System.out.print(queue.poll().keySet().toString() + " ");
          if (--prev_level == 0) {
             prev_level = current_level;
