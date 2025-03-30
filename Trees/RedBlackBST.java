@@ -20,6 +20,9 @@ class RedBlackNode<K, V> {
    }
 }
 
+/**
+ * implementation of red back binary search tree
+ */
 public class RedBlackBST<K, V> implements IRedBlackBST<K, V> {
 
    @Override
