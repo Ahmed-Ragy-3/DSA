@@ -14,7 +14,7 @@ package Trees.BBST;
  *
  * The time complexity for insertion, deletion, and searching in an AVL tree is O(log n) due to the balanced structure.
  */
-public class AVLTree<T extends Comparable<T>> extends BST<T> implements Iterable<T> {
+public class AVLTree<T extends Comparable<T>> extends BST<T> {
 
     /**
      * Insert a node into the AVL tree.

@@ -1,101 +1,56 @@
 package Trees;
 
+import java.util.*;
+
 // red black tree visualization: https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
 
-import java.util.Objects;
-
-interface IRedBlackNode {
-   public boolean isRed();
-}
-
-interface IRedBlackBST<K extends Comparable<K>, V> {
-   public V get(K key);
-   RedBlackNode<K, V> rotateRight(RedBlackNode<K, V> node);
-   RedBlackNode<K, V> rotateLeft(RedBlackNode<K, V> node);
-   RedBlackNode<K, V> flipColors(RedBlackNode<K, V> node);
-   RedBlackNode<K, V> put(K key, V value);
-}
-
-class RedBlackNode<K extends Comparable<K>, V> {
-
-   public static final boolean RED = true;
-   public static final boolean BLACK = false;
-
-   private K key;
-   private V value;
-
-   public RedBlackNode<K, V> getRight() {
-      return right;
-   }
-
-   public RedBlackNode<K, V> getLeft() {
-      return left;
-   }
-
-   private RedBlackNode<K, V> left, right;
-   private boolean color;  // color of parent link
-
-   public K getKey() {
-      return key;
-   }
-
-   public V getValue() {
-      return value;
-   }
-
-   public boolean isColor() {
-      return color;
-   }
-
-   public boolean isRed() {
-      return color == RED;
-   }
-
-   public final int hashCode() {
-      return Objects.hashCode(key) ^ Objects.hashCode(value);
-   }
-
-   public void setKey(K key) {
-      this.key = key;
-   }
-
-   public void setValue(V value) {
-      this.value = value;
-   }
-
-   public void setLeft(RedBlackNode<K, V> left) {
-      this.left = left;
-   }
-
-   public void setRight(RedBlackNode<K, V> right) {
-      this.right = right;
-   }
-
-   public void setColor(boolean color) {
-      this.color = color;
-   }
-}
-
-
 /**
- * implementation of red back binary search tree
- *  Red Black Tree is a BST such that:
- *    • No node has two red links connected to it.
- *    • Every path from root to null link has the same number of black links. (Perfect Balance)
- *    • Red links lean left.
+ * Implementation of Red Black Binary Search Tree
+ * Red Black Tree is a BST such that:
+ * - No node has two red links connected to it.
+ * - Every path from root to null link has the same number of black links.
+ * (Perfect Balance)
+ * - Red links lean left.
  */
-public class RedBlackBST<K extends Comparable<K>, V> implements IRedBlackBST<K, V> {
+public class RedBlackBST<K extends Comparable<K>, V> implements Iterable<K> {
 
-   private RedBlackNode<K, V> root;
+   private class RedBlackNode {
+      public static final boolean RED = true;
+      public static final boolean BLACK = false;
 
-   @Override
+      public K key;
+      public V value;
+
+      public RedBlackNode left, right;
+      public boolean color; // color of parent link
+
+      public RedBlackNode(K key, V value) {
+         this.key = key;
+         this.value = value;
+         this.color = RED;
+         this.left = null;
+         this.right = null;
+      }
+
+      public boolean isRed() {
+         return color == RED;
+      }
+   }
+
+   public RedBlackNode root;
+
    public V get(K key) {
-      RedBlackNode<K, V> temp = root;
+      RedBlackNode temp = root;
       while (temp != null) {
-         int cmp = key.compareTo(temp.getKey());
-         if      (cmp  < 0) temp = temp.getLeft();
-         else if (cmp  > 0) temp = temp.getRight();
-         else if (cmp == 0) return temp.getValue();
+         int cmp = key.compareTo(temp.key);
+         if (cmp < 0)
+            temp = temp.left;
+
+         else if (cmp > 0)
+            temp = temp.right;
+
+         else
+            return temp.value;
       }
       return null;
    }
@@ -104,16 +59,14 @@ public class RedBlackBST<K extends Comparable<K>, V> implements IRedBlackBST<K, 
     * Orient a left-leaning red link to (temporarily) lean right
     * Called when there is 2 red left links in a row
     */
-   @Override
-   public RedBlackNode<K, V> rotateRight(RedBlackNode<K, V> node) {
-      assert node.getRight().isRed();
+   private RedBlackNode rotateRight(RedBlackNode node) {
+      assert node.left != null && node.left.isRed(); // fixed condition
+      RedBlackNode x = node.left;
+      node.left = x.right;
+      x.right = node;
 
-      RedBlackNode<K, V> x = node.getLeft();
-      node.setLeft(x.getRight());
-      x.setRight(node);
-
-      node.setColor(RedBlackNode.RED);
-      x.setColor(node.isColor());
+      x.color = node.color;
+      node.color = RedBlackNode.RED;
 
       return x;
    }
@@ -122,35 +75,139 @@ public class RedBlackBST<K extends Comparable<K>, V> implements IRedBlackBST<K, 
     * Orient a (temporarily) right-leaning red link to lean left
     * Called when there is a red right link
     */
-   @Override
-   public RedBlackNode<K, V> rotateLeft(RedBlackNode<K, V> node) {
-      assert node.getRight().isRed();
+   private RedBlackNode rotateLeft(RedBlackNode node) {
+      assert node.right != null && node.right.isRed(); // null-check added
+      RedBlackNode x = node.right;
+      node.right = x.left;
+      x.left = node;
 
-      RedBlackNode<K, V> x = node.getRight();
-      node.setRight(x.getLeft());
-      x.setLeft(node);
-      x.setColor(node.isColor());
-      node.setColor(RedBlackNode.RED);
+      x.color = node.color;
+      node.color = RedBlackNode.RED;
 
       return x;
    }
 
-   @Override
-   public RedBlackNode<K, V> flipColors(RedBlackNode<K, V> node) {
-      assert node.isRed() && node.getLeft().isRed() && node.getRight().isRed();
+   private void flipColors(RedBlackNode node) {
+      assert node != null && node.left != null && node.right != null;
+      assert !node.isRed() && node.left.isRed() && node.right.isRed(); // updated logic
 
-      node.setColor(RedBlackNode.RED);
-      node.getLeft().setColor(RedBlackNode.BLACK);
-      node.getRight().setColor(RedBlackNode.BLACK);
+      node.color = RedBlackNode.RED;
+      node.left.color = RedBlackNode.BLACK;
+      node.right.color = RedBlackNode.BLACK;
+   }
+
+   public void insert(K key, V value) {
+      root = insert(root, key, value); // fixed: assign to root
+      root.color = RedBlackNode.BLACK; // root must always be black
+   }
+
+   private RedBlackNode insert(RedBlackNode node, K key, V value) {
+      if (node == null)
+         return new RedBlackNode(key, value);
+
+      int cmp = key.compareTo(node.key);
+      if (cmp < 0)
+         node.left = insert(node.left, key, value); // fixed recursion
+      else if (cmp > 0)
+         node.right = insert(node.right, key, value);
+      else
+         node.value = value;
+
+      if (node.right != null && node.right.isRed() && (node.left == null || !node.left.isRed()))
+         node = rotateLeft(node);
+
+      if (node.left != null && node.left.isRed() && node.left.left != null && node.left.left.isRed())
+         node = rotateRight(node);
+
+      if (node.left != null && node.left.isRed() && node.right != null && node.right.isRed())
+         flipColors(node);
 
       return node;
    }
 
-   @Override
-   public RedBlackNode<K, V> put(K key, V value) {
-      RedBlackNode<K, V> node = new RedBlackNode<>();
-      return null;
+   /**
+    * This deletion is implemented by Hibbard deletion
+    * Which is much more simpler
+    * Although this may not guarantee balance of the BST
+    *
+    * @param key of the node to be deleted
+    * @return node deleted from the RedBlack BST
+    */
+   public V delete(K key) {
+      RedBlackNode deleted = delete(root, key);
+      if (deleted == null) return null;
+      return deleted.value;
    }
 
+   private RedBlackNode delete(RedBlackNode node, K key) {
+      if (node == null)
+         return null;
 
+      int cmp = key.compareTo(node.key);
+      if (cmp < 0)
+         node.left = delete(node.left, key);
+
+      else if (cmp > 0)
+         node.right = delete(node.right, key);
+
+      else {
+         if (node.left == null)
+            return node.right;
+         if (node.right == null)
+            return node.left;
+
+         RedBlackNode maxLeft = findMax(node.left);
+         node.key = maxLeft.key;
+         node.value = maxLeft.value;
+         node.left = deleteMax(node.left);
+      }
+
+      return node;
+   }
+
+   private RedBlackNode findMax(RedBlackNode node) {
+      while (node.right != null)
+         node = node.right;
+      return node;
+   }
+
+   private RedBlackNode deleteMax(RedBlackNode node) {
+      if (node.right == null)
+         return node.left;
+      node.right = deleteMax(node.right);
+      return node;
+   }
+
+   /**
+    * Returns an iterator that traverses keys in-order (ascending).
+    */
+   @Override
+   public Iterator<K> iterator() {
+      return new Iterator<K>() {
+         private Stack<RedBlackNode> stack = new Stack<>();
+
+         {
+            pushLeft(root);
+         }
+
+         private void pushLeft(RedBlackNode node) {
+            while (node != null) {
+               stack.push(node);
+               node = node.left;
+            }
+         }
+
+         @Override
+         public boolean hasNext() {
+            return !stack.isEmpty();
+         }
+
+         @Override
+         public K next() {
+            RedBlackNode node = stack.pop();
+            pushLeft(node.right);
+            return node.key;
+         }
+      };
+   }
 }

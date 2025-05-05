@@ -1,9 +1,6 @@
 package Stack_Queue;
 
-import java.util.Arrays;
 import java.util.Scanner;
-
-
 
 public class ArrayQueue<T>  {
     private int size = 0;

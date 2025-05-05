@@ -149,7 +149,6 @@ public abstract class BST<T extends Comparable<T>> implements Iterable<T> {
      */
     protected int compare(T a, T b) {
         if (comparator != null) return comparator.compare(a, b);
-        @SuppressWarnings("unchecked")
         Comparable<? super T> ca = (Comparable<? super T>) a;
         return ca.compareTo(b);
     }
