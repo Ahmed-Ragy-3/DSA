@@ -2,8 +2,6 @@ package Sortings;
 
 import java.util.Comparator;
 
-import sort.SortUtil;
-
 /**
  * Implements the Selection Sort algorithm, which repeatedly selects the
  * smallest (or largest) element
@@ -15,7 +13,12 @@ import sort.SortUtil;
  */
 public class SelectionSort {
 
-    private SelectionSort() {
+    private SelectionSort() {}
+
+    private static <T> void swap(T[] arr, int i, int j) {
+        T temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
     /**
@@ -23,8 +26,7 @@ public class SelectionSort {
      *
      * @param arr The array to be sorted.
      */
-    @Override
-    public static void sort(T[] arr) {
+    public static <T extends Comparable<? super T>> void sort(T[] arr) {
         sort(arr, Comparator.naturalOrder());
     }
 
@@ -34,12 +36,10 @@ public class SelectionSort {
      * @param arr        The array to be sorted.
      * @param comparator Comparator defining the sorting order.
      */
-    @Override
-    public static void sort(T[] arr, Comparator<? super T> comparator) {
+    public static <T> void sort(T[] arr, Comparator<? super T> comparator) {
         int n = arr.length;
 
         for (int i = 0; i < n - 1; i++) {
-
             int index = i;
 
             // Find the minimum (or maximum) element in the unsorted portion of the array
@@ -51,9 +51,8 @@ public class SelectionSort {
 
             // Swap the found minimum element with the first element
             if (i != index) {
-                SortUtil.swap(arr, i, index);
+                swap(arr, i, index);
             }
         }
-
     }
 }

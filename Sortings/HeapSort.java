@@ -2,19 +2,38 @@ package Sortings;
 
 import java.util.Comparator;
 
-import sort.SortUtil;
-
 /**
- * Implements the in-place Heap Sort algorithm using a customizable comparator.
- * Heap Sort builds a heap from the input array and then repeatedly extracts the
- * largest (or smallest) element,
- * ensuring a sorted order.
+ * HeapSort is an in-place, comparison-based sorting algorithm that builds a heap
+ * from the input array and then repeatedly extracts the largest (or smallest)
+ * element, ensuring a sorted order.
+ *
+ * <p>
+ * <b>Time Complexity:</b>
+ * </p>
+ * - Best Case: O(n log n) when the heap is already balanced.
+ * - Average Case: O(n log n) due to heapification and extraction.
+ * - Worst Case: O(n log n) when the array is sorted in reverse order.
+ *
+ * <p>
+ * <b>Space Complexity:</b>
+ * </p>
+ * - O(1) since sorting is performed in-place without additional memory usage.
+ *
+ * <p>
+ * This implementation supports generic types by extending Comparable<? super
+ * T> and using a custom comparator.
+ * </p>
  *
  * @param <T> The type of elements to be sorted, which must extend Comparable.
  */
 public class HeapSort {
 
-    private HeapSort() {
+    private HeapSort() {}
+
+    private static <T> void swap(T[] arr, int i, int j) {
+        T temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
     /**
@@ -22,8 +41,7 @@ public class HeapSort {
      *
      * @param arr The array to be sorted.
      */
-    @Override
-    public static void sort(T[] arr) {
+    public static <T extends Comparable<? super T>> void sort(T[] arr) {
         sort(arr, Comparator.naturalOrder());
     }
 
@@ -33,8 +51,7 @@ public class HeapSort {
      * @param arr        The array to be sorted.
      * @param comparator The comparator defining the sorting order.
      */
-    @Override
-    public static void sort(T[] arr, Comparator<? super T> comparator) {
+    public static <T> void sort(T[] arr, Comparator<? super T> comparator) {
         int n = arr.length;
 
         // Build the heap
@@ -44,9 +61,8 @@ public class HeapSort {
 
         // Extract elements from the heap one by one
         for (int i = n - 1; i > 0; i--) {
-            SortUtil.swap(arr, 0, i); // Move the root (max or min) to the end
+            swap(arr, 0, i); // Move the root (max or min) to the end
             heapify(arr, i, 0, comparator); // Restore heap property
-
         }
     }
 
@@ -59,7 +75,7 @@ public class HeapSort {
      * @param i          The index of the root of the subtree.
      * @param comparator The comparator defining the sorting order.
      */
-    private void heapify(T[] arr, int n, int i, Comparator<? super T> comparator) {
+    private static <T> void heapify(T[] arr, int n, int i, Comparator<? super T> comparator) {
         int largest = i; // Assume root as largest
         int left = 2 * i + 1;
         int right = 2 * i + 2;
@@ -73,9 +89,8 @@ public class HeapSort {
         }
 
         if (largest != i) {
-            SortUtil.swap(arr, i, largest);
+            swap(arr, i, largest);
             heapify(arr, n, largest, comparator);
         }
     }
-
 }

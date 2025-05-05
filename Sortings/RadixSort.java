@@ -5,34 +5,35 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Implements the Radix Sort algorithm, a non-comparison-based sorting method
- * that sorts numbers
- * digit by digit using a positional system.
+ * RadixSort is a non-comparison-based, stable sorting algorithm that sorts
+ * integers by processing digits individually. It works by distributing numbers
+ * into buckets according to each digit, from least to most significant.
  * <p>
- * Radix Sort works by distributing numbers into buckets based on individual
- * digits, processing
- * them from the least significant digit to the most significant digit. This
- * implementation
- * supports sorting both positive and negative numbers.
- * </p>
+ * This implementation handles both positive and negative integers using
+ * separate buckets to maintain correct order.
+ * <p>
+ * Time Complexity:
+ * - Best, Average, and Worst Case: O(nk), where n is the number of elements and
+ *   k is the number of digits in the largest number.
+ * <p>
+ * Space Complexity:
+ * - O(n + k), for the buckets and temporary arrays used in each pass.
+ * <p>
+ * Note: RadixSort does not support custom Comparators due to its non-comparison nature.
  *
- * @param <T> The type of elements to be sorted, which must be a Number and
- *            extend Comparable.
+ * @param <T> The type of elements to be sorted, must extend Number and implement Comparable.
  */
 public class RadixSort<T extends Number & Comparable<? super T>> {
-    private static final int BASE = 10; // The base used for digit extraction (decimal system)
-    private final Queue<T>[] positiveBuckets; // Buckets for positive numbers
-    private final Queue<T>[] negativeBuckets; // Buckets for negative numbers
+
+    private static final int BASE = 10; // Base-10 system
+    private final Queue<T>[] positiveBuckets;
+    private final Queue<T>[] negativeBuckets;
 
     /**
-     * Constructs a RadixSort instance.
-     *
-     * @param showSteps If true, the algorithm logs each step of the sorting
-     *                  process.
+     * Constructs a RadixSort instance with initialized positive and negative buckets.
      */
     @SuppressWarnings("unchecked")
     public RadixSort() {
-        super(showSteps);
         positiveBuckets = (Queue<T>[]) new Queue[BASE];
         negativeBuckets = (Queue<T>[]) new Queue[BASE];
         for (int i = 0; i < BASE; i++) {
@@ -42,17 +43,11 @@ public class RadixSort<T extends Number & Comparable<? super T>> {
     }
 
     /**
-     * Sorts the given array using Radix Sort.
-     * <p>
-     * The algorithm sorts numbers by processing each digit from the least
-     * significant to the most significant.
-     * It handles negative numbers separately to maintain correct ordering.
-     * </p>
+     * Sorts the given array using RadixSort with natural ordering.
      *
      * @param arr The array to be sorted.
      */
-    @Override
-    public static void sort(T[] arr) {
+    public static <T extends Number & Comparable<? super T>> void sort(T[] arr) {
         if (arr.length == 0)
             return;
 
@@ -61,34 +56,32 @@ public class RadixSort<T extends Number & Comparable<? super T>> {
             maxValue = Math.max(maxValue, Math.abs(num.longValue()));
         }
 
+        RadixSort<T> sorter = new RadixSort<>();
         for (long place = 1; maxValue / place > 0; place *= BASE) {
-            distribute(arr, place);
-            collect(arr);
-
+            sorter.distribute(arr, place);
+            sorter.collect(arr);
         }
     }
 
     /**
-     * Sorts the array using Radix Sort and a custom comparator.
+     * Throws UnsupportedOperationException because RadixSort doesn't support custom comparators.
      *
      * @param arr        The array to be sorted.
-     * @param comparator The comparator defining the sort order.
+     * @param comparator The comparator to define element order.
      */
-    @Override
-    public static void sort(T[] arr, Comparator<? super T> comparator) {
+    public static <T extends Number & Comparable<? super T>> void sort(T[] arr, Comparator<? super T> comparator) {
         throw new UnsupportedOperationException("RadixSort does not support custom comparators.");
     }
 
     /**
-     * Distributes elements from the array into buckets based on the current digit
-     * place.
+     * Distributes elements from the array into buckets based on the digit at the specified place.
      *
-     * @param arr   The array of numbers to distribute.
-     * @param place The digit place being processed (1s, 10s, 100s, etc.).
+     * @param arr   The array of elements to distribute.
+     * @param place The current digit place (1s, 10s, 100s, etc.).
      */
     private void distribute(T[] arr, long place) {
         for (T num : arr) {
-            long digit = Math.abs(num.longValue() / place) % BASE; // Extract the digit at 'place'
+            long digit = Math.abs(num.longValue() / place) % BASE;
             if (num.longValue() < 0) {
                 negativeBuckets[(int) digit].add(num);
             } else {
@@ -98,26 +91,22 @@ public class RadixSort<T extends Number & Comparable<? super T>> {
     }
 
     /**
-     * Collects elements from the buckets and places them back into the array.
-     * <p>
-     * Negative numbers are collected first, in reverse order (most negative to
-     * least negative).
-     * Then, positive numbers are collected in normal order.
-     * </p>
+     * Collects elements from buckets and places them back into the array.
+     * Negative buckets are collected in reverse order, followed by positive buckets in ascending order.
      *
-     * @param arr The array to store the sorted elements.
+     * @param arr The array to be updated with sorted elements.
      */
     private void collect(T[] arr) {
         int index = 0;
 
-        // Collect from negative buckets in reverse order to maintain descending order
+        // Collect negative numbers (in reverse)
         for (int i = BASE - 1; i >= 0; i--) {
             while (!negativeBuckets[i].isEmpty()) {
                 arr[index++] = negativeBuckets[i].poll();
             }
         }
 
-        // Collect from positive buckets in ascending order
+        // Collect positive numbers
         for (int i = 0; i < BASE; i++) {
             while (!positiveBuckets[i].isEmpty()) {
                 arr[index++] = positiveBuckets[i].poll();

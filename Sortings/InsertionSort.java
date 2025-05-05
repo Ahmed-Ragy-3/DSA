@@ -24,12 +24,10 @@ import java.util.Comparator;
  * This implementation supports generic types by extending Comparable<? super
  * T>.
  *
- * 
  */
 public class InsertionSort {
 
-    private InsertionSort() {
-    }
+    private InsertionSort() {}
 
     /**
      * Sorts the input array using the Insertion Sort algorithm with natural
@@ -37,8 +35,7 @@ public class InsertionSort {
      *
      * @param arr Array to sort.
      */
-    @Override
-    public static void sort(T[] arr) {
+    public static <T extends Comparable<? super T>> void sort(T[] arr) {
         sort(arr, Comparator.naturalOrder());
     }
 
@@ -49,8 +46,7 @@ public class InsertionSort {
      * @param arr        Array to sort.
      * @param comparator Comparator defining the sorting order.
      */
-    @Override
-    public static void sort(T[] arr, Comparator<? super T> comparator) {
+    public static <T> void sort(T[] arr, Comparator<? super T> comparator) {
         for (int i = 1; i < arr.length; i++) {
 
             T key = arr[i]; // Store the current element to be compared
@@ -66,6 +62,5 @@ public class InsertionSort {
             // Insert the key into its correct position
             arr[j + 1] = key;
         }
-
     }
 }

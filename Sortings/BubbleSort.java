@@ -26,11 +26,15 @@ import java.util.Comparator;
  * T>.
  * </p>
  *
- * 
  */
 public class BubbleSort {
 
-    private BubbleSort() {
+    private BubbleSort() {}
+
+    private static <T> void swap(T[] arr, int i, int j) {
+        T temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
     /**
@@ -38,8 +42,7 @@ public class BubbleSort {
      *
      * @param arr The array to be sorted.
      */
-    @Override
-    public static void sort(T[] arr) {
+    public static <T extends Comparable<? super T>> void sort(T[] arr) {
         sort(arr, Comparator.naturalOrder());
     }
 
@@ -49,16 +52,14 @@ public class BubbleSort {
      * @param arr        The array to be sorted.
      * @param comparator The comparator defining the sorting order.
      */
-    @Override
-    public static void sort(T[] arr, Comparator<? super T> comparator) {
+    public static <T> void sort(T[] arr, Comparator<? super T> comparator) {
         int size = arr.length;
         for (int i = 0; i < size - 1; i++) {
             boolean swapped = false;
             for (int j = 0; j < size - i - 1; j++) {
                 if (comparator.compare(arr[j], arr[j + 1]) > 0) {
-                    SortUtil.swap(arr, j, j + 1);
+                    swap(arr, j, j + 1);
                     swapped = true;
-
                 }
             }
             if (!swapped) {
